@@ -7,7 +7,7 @@
 // import BackTop from 'iview/src/components/back-top';
 // import Badge from 'iview/src/components/badge';
 // import Breadcrumb from 'iview/src/components/breadcrumb';
-// import Button from 'iview/src/components/button';
+import Button from 'iview/src/components/button';
 // import Card from 'iview/src/components/card';
 // import Carousel from 'iview/src/components/carousel';
 // import Cascader from 'iview/src/components/cascader';
@@ -16,9 +16,9 @@
 // import Collapse from 'iview/src/components/collapse';
 // import DatePicker from 'iview/src/components/date-picker';
 // import Dropdown from 'iview/src/components/dropdown';
-// import Form from 'iview/src/components/form';
+import Form from 'iview/src/components/form';
 import Icon from 'iview/src/components/icon';
-// import Input from 'iview/src/components/input';
+import Input from 'iview/src/components/input';
 // import InputNumber from 'iview/src/components/input-number';
 import LoadingBar from 'iview/src/components/loading-bar';
 import Menu from 'iview/src/components/menu';
@@ -44,7 +44,7 @@ import Tag from 'iview/src/components/tag';
 // import Tree from 'iview/src/components/tree';
 // import Upload from 'iview/src/components/upload';
 import { Row, Col } from 'iview/src/components/grid';
-// import { Select, Option, OptionGroup } from 'iview/src/components/select';
+import { Select, Option, OptionGroup } from 'iview/src/components/select';
 import locale from 'iview/src/locale';
 
 const iview = {
@@ -54,9 +54,9 @@ const iview = {
     // Badge,
     // Breadcrumb,
     // BreadcrumbItem: Breadcrumb.Item,
-    // iButton: Button,
-    // Button,
-    // ButtonGroup: Button.Group,
+    iButton: Button,
+    Button,
+    ButtonGroup: Button.Group,
     // Card,
     // Carousel,
     // CarouselItem: Carousel.Item,
@@ -68,15 +68,15 @@ const iview = {
     // Dropdown,
     // DropdownItem: Dropdown.Item,
     // DropdownMenu: Dropdown.Menu,
-    // Form,
-    // iForm: Form,
-    // FormItem: Form.Item,
+    Form,
+    iForm: Form,
+    FormItem: Form.Item,
     Col,
     iCol: Col,
     // Collapse,
-    // Icon,
-    // Input,
-    // iInput: Input,
+    Icon,
+    Input,
+    iInput: Input,
     // InputNumber,
     LoadingBar,
     Menu,
@@ -87,9 +87,9 @@ const iview = {
     Message,
     Modal,
     Notice,
-    // Option: Option,
-    // iOption: Option,
-    // OptionGroup,
+    Option: Option,
+    iOption: Option,
+    OptionGroup,
     Page,
     // Panel: Collapse.Panel,
     // Poptip,
@@ -99,8 +99,8 @@ const iview = {
     // RadioGroup: Radio.Group,
     // Rate,
     Row,
-    // Select,
-    // iSelect: Select,
+    Select,
+    iSelect: Select,
     // Slider,
     // Spin,
     // Step: Steps.Step,

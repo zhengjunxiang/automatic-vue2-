@@ -26,9 +26,6 @@ app.get('/history', (req, res) => {
       {amount: 10, avg_price: 11, price: 12, deal_amount: 13, create_date: 32455234123, status: -1},
       {amount: 10, avg_price: 11, price: 12, deal_amount: 13, create_date: 32455234123, status: -1},
       {amount: 10, avg_price: 11, price: 12, deal_amount: 13, create_date: 32455234123, status: -1},
-      {amount: 10, avg_price: 11, price: 12, deal_amount: 13, create_date: 32455234123, status: -1},
-      {amount: 10, avg_price: 11, price: 12, deal_amount: 13, create_date: 32455234123, status: -1},
-      {amount: 10, avg_price: 11, price: 12, deal_amount: 13, create_date: 32455234123, status: -1},
       {amount: 10, avg_price: 11, price: 12, deal_amount: 13, create_date: 32455234123, status: -1}
     ]}
   );
@@ -39,7 +36,7 @@ app.get('/depth', (req, res) => {
     {orders: {
       "asks": [
         [
-          18381,
+          18391,
           5.609
         ], [
           18380,
