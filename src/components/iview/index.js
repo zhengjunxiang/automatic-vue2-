@@ -31,7 +31,7 @@ import Page from 'iview/src/components/page';
 // import Radio from 'iview/src/components/radio';
 // import Rate from 'iview/src/components/rate';
 // import Slider from 'iview/src/components/slider';
-// import Spin from 'iview/src/components/spin';
+import Spin from 'iview/src/components/spin';
 // import Steps from 'iview/src/components/steps';
 // import Switch from 'iview/src/components/switch';
 import Table from 'iview/src/components/table';
@@ -102,7 +102,7 @@ const iview = {
     Select,
     iSelect: Select,
     // Slider,
-    // Spin,
+    Spin,
     // Step: Steps.Step,
     // Steps,
     // Switch,

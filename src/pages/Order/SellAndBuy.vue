@@ -26,9 +26,13 @@
         </div>
 
         <Form-item>
-          <Row>
+          <div v-if="FetchTradeType === 'fetching'">
+            <Spin></Spin>
+          </div>
+          <Row v-else-if="FetchTradeType === 'ok'">
             <Col span="18"><Button type="error" @click="handleSubmit" long>卖出</Button></Col>
           </Row>
+          <p v-else-if="FetchTradeType === 'error'">TradeType类型获取失败, 请等待工程师修复。</p>
         </Form-item>
       </Form>
     </Tab-pane>
@@ -59,9 +63,13 @@
         </div>
 
         <Form-item>
-          <Row>
-            <Col span="18"><Button type="success" @click="handleSubmit" long>买入</Button></Col>
+          <div v-if="FetchTradeType === 'fetching'">
+            <Spin></Spin>
+          </div>
+          <Row v-else-if="FetchTradeType === 'ok'">
+            <Col span="18"><Button type="error" @click="handleSubmit" long>卖出</Button></Col>
           </Row>
+          <p v-else-if="FetchTradeType === 'error'">TradeType类型获取失败, 请等待工程师修复。</p>
         </Form-item>
       </Form>
     </Tab-pane>
@@ -82,6 +90,7 @@ export default {
   },
   data () {
     return {
+      FetchTradeType: 'fetching',
       formData: {
         symbol: 'btc_cny',
         orderType: 'sell'
@@ -174,41 +183,15 @@ export default {
             this.sellTradeType = this.buyTradeType = this.tradeTypeArr[0].id;
             this.tradeTypeArr.forEach(item => this.tradeTypeObj[item.id] = item.name);
           }
+          this.FetchTradeType = 'ok';
         }, error => {
-          console.log('error', error);
+          this.$Message.error(`${error && error.statusText || 'TradeType类型获取失败'}, `);
+          this.FetchTradeType = 'error';
         });
     }
   }
 }
 </script>
 <style lang="less">
-.order-page {
-  .ivu-icon-social,.ivu-icon-second {
-    font-size: 14px;
-    font-weight: bold;
-  }
-  .ivu-icon-social::before {
-    content: '%';
-  }
-  .ivu-icon-second::before {
-    content: 'S';
-  }
-  .block-dropdown,.ivu-dropdown {
-    display: block;
-    .ivu-btn {
-      width: 100%;
-      position: relative;
-      min-height: 30px;
-      .ivu-icon {
-        position: absolute;
-        right: 12px;
-        top: 10px;
-      }
-    }
-    .ivu-select-dropdown {
-      width: 100%;
-      left: 0px;
-    }
-  }
-}
+
 </style>

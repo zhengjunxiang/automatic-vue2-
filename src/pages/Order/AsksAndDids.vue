@@ -73,23 +73,5 @@ export default {
 }
 </script>
 <style lang="less">
-.order-page {
-  .ask-row {
-    .ivu-table-cell {
-      color: red;
-    }
-  }
-  .bids-row {
-    .ivu-table-cell {
-      color: green;
-    }
-  }
-  .ivu-icon-social {
-    font-size: 14px;
-    font-weight: bold;
-  }
-  .ivu-icon-social::before {
-    content: '%';
-  }
-}
+
 </style>
