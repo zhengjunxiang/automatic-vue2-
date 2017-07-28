@@ -16,7 +16,7 @@ import moment from 'moment'
 export default {
   name: 'Home',
   created () {
-    this.$http.get('http://192.168.2.166:8080/history')
+    this.$http.get('http://192.168.2.186:8080/history')
     // this.$http.get('http://localhost:3001/history')
     .then((response) => {
       if (response.data && response.data.orders.length > 0) {
@@ -33,7 +33,7 @@ export default {
   methods: {
     selectStatus (state, type) {
       const isColor = type === 'color'
-      switch (state) {
+      switch (state - 0) {
         case -1:
           return isColor ? 'red' : '已撤销'
         case 0:

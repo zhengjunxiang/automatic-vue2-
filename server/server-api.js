@@ -74,6 +74,15 @@ app.get('/depth', (req, res) => {
   );
 });
 
+app.get('/tradetype', (req, res) => {
+  res.json(
+    {data: [
+      {id: 1, name: '冰山委托'},
+      {id: 2, name: '时间加权委托'}
+    ]}
+  );
+});
+
 app.listen(3001, () => {
   console.info('访问：http://localhost:3001/');
 });
