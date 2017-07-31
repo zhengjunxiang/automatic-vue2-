@@ -174,8 +174,8 @@ export default {
       return formData;
     },
     fetchTradetype () {
-      this.$http.get('http://192.168.2.186:8080/tradetype')
-      // this.$http.get('http://localhost:3001/tradetype')
+      // this.$http.get('http://192.168.2.186:8080/tradetype')
+      this.$http.get('http://localhost:3001/tradetype')
         .then(response => {
           if (response.data &&  response.data.data.length > 0) {
             this.tradeTypeArr = response.data.data;

@@ -9,13 +9,13 @@
   </Row>
 </template>
 <script>
-import SellAndBuy from './SellAndBuy.vue';
-import AsksAndDids from './AsksAndDids.vue';
+import SellAndBuy from './SellAndBuy';
+import AsksAndDids from './AsksAndDids';
 export default {
   name: 'order',
   components: {
-    sellAndBuy: SellAndBuy,
-    asksAndDids: AsksAndDids
+    SellAndBuy,
+    AsksAndDids
   }
 }
 </script>

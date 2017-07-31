@@ -24,15 +24,20 @@
   </Form>
 </template>
 <script>
+import {reg, mes} from '../../../utils/utils';
 export default {
   name: "SellBinShang",
   data () {
     const validateNumber = (rule, value, callback) => {
-      const reg = /^[0-9]+([.]{1}[0-9]{1,})?$/;
-      if (value === '') {
-        callback(new Error('请输入内容'));
-      } else if(!reg.test(value)) {
-        callback(new Error('请输入数字'));
+      if(!reg.validatefloat.test(value)) {
+        callback(new Error(mes.float));
+      } else {
+        callback();
+      }
+    };
+    const validateDepthPercent = (rule, value, callback) => {
+      if(!reg.depthPercent.test(value)) {
+        callback(new Error(mes.depthPercent));
       } else {
         callback();
       }
@@ -55,7 +60,7 @@ export default {
         ],
         orderDepth: [
           { required: true, message: '不能为空', trigger: 'blur' },
-          { validator: validateNumber, trigger: 'blur' }
+          { validator: validateDepthPercent, trigger: 'blur' }
         ],
         borderPrice: [
           { required: true, message: '不能为空', trigger: 'blur' },

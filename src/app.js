@@ -7,7 +7,7 @@ import Iview from './components/iview'
 import App from './pages/App.vue'
 import router from './router'
 import store from './store/store'
-import utils from './utils/utils'
+import {utils} from './utils/utils'
 
 import './style/iview/index.less'
 

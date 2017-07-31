@@ -10,7 +10,7 @@ const config = function(env) {
   return Merge(CommonConfig, {
     entry: [
       // 开启 React 代码的模块热替换(HMR)
-      'webpack-dev-server/client?http://192.168.2.87:' + PORT,
+      'webpack-dev-server/client?http://192.168.170.140:' + PORT,
       // 为 webpack-dev-server 的环境打包代码
       // 然后连接到指定服务器域名与端口
       'webpack/hot/only-dev-server',
@@ -35,7 +35,7 @@ const config = function(env) {
     devServer: {
       hot: true,
       port: PORT,
-      host: '192.168.2.87',
+      host: '192.168.170.140',
       open: true,
       historyApiFallback: true,
       stats: {errors: true, errorDetails: true, warnings: false, chunks: false},

@@ -36,15 +36,34 @@
   </Form>
 </template>
 <script>
+import {reg, mes} from '../../../utils/utils';
 export default {
   name: "SellTimes",
   data () {
     const validateNumber = (rule, value, callback) => {
-      const reg = /^[0-9]+([.]{1}[0-9]{1,})?$/;
-      if (value === '') {
-        callback(new Error('请输入内容'));
-      } else if(!reg.test(value)) {
-        callback(new Error('请输入数字'));
+      if(!reg.validatefloat.test(value)) {
+        callback(new Error(mes.float));
+      } else {
+        callback();
+      }
+    };
+    const validateFivePercent = (rule, value, callback) => {
+      if(!reg.fivePercent.test(value)) {
+        callback(new Error(mes.fivePercent));
+      } else {
+        callback();
+      }
+    };
+    const validateSdScale = (rule, value, callback) => {
+      if(!reg.sdScale(value)) {
+        callback(new Error(mes.sdScale));
+      } else {
+        callback();
+      }
+    };
+    const validateEntrustInterval = (rule, value, callback) => {
+      if(!reg.entrustInterval(value)) {
+        callback(new Error(mes.entrustInterval));
       } else {
         callback();
       }
@@ -65,11 +84,11 @@ export default {
         ],
         fanwei: [
           { required: true, message: '不能为空', trigger: 'blur' },
-          { validator: validateNumber, trigger: 'blur' }
+          { validator: validateFivePercent, trigger: 'blur' }
         ],
         bili: [
           { required: true, message: '不能为空', trigger: 'blur' },
-          { validator: validateNumber, trigger: 'blur' }
+          { validator: validateSdScale, trigger: 'blur' }
         ],
         shangxian: [
           { required: true, message: '不能为空', trigger: 'blur' },
@@ -81,7 +100,7 @@ export default {
         ],
         jiange: [
           { required: true, message: '不能为空', trigger: 'blur' },
-          { validator: validateNumber, trigger: 'blur' }
+          { validator: validateEntrustInterval, trigger: 'blur' }
         ]
       }
     }
