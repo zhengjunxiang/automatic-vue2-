@@ -5,31 +5,31 @@
         <Col span="18"><Input v-model="formValidate.amount" icon="social-bitcoin"></Input></Col>
       </Row>
     </Form-item>
-    <Form-item label="扫单范围：" prop="fanwei">
+    <Form-item label="扫单范围：" prop="orderDepth">
       <Row>
-        <Col span="18"><Input v-model="formValidate.fanwei" icon="social"></Input></Col>
+        <Col span="18"><Input v-model="formValidate.orderDepth" icon="social"></Input></Col>
         <Col span="5" offset="1">(参考值：0.1%)</Col>
       </Row>
     </Form-item>
-    <Form-item label="扫单比例：" prop="bili">
+    <Form-item label="扫单比例：" prop="tradeRatio">
       <Row>
-        <Col span="18"><Input v-model="formValidate.bili" icon="social"></Input></Col>
+        <Col span="18"><Input v-model="formValidate.tradeRatio" icon="social"></Input></Col>
         <Col span="5" offset="1">(参考值：10%)</Col>
       </Row>
     </Form-item>
-    <Form-item label="单笔委托上限：" prop="shangxian">
+    <Form-item label="单笔委托上限：" prop="borderAmount">
       <Row>
-        <Col span="18"><Input v-model="formValidate.shangxian" icon="social-bitcoin"></Input></Col>
+        <Col span="18"><Input v-model="formValidate.borderAmount" icon="social-bitcoin"></Input></Col>
       </Row>
     </Form-item>
-    <Form-item label="最低价格：" prop="minPrice">
+    <Form-item label="最低价格：" prop="borderPrice">
       <Row>
-        <Col span="18"><Input v-model="formValidate.minPrice" icon="social-yen"></Input></Col>
+        <Col span="18"><Input v-model="formValidate.borderPrice" icon="social-yen"></Input></Col>
       </Row>
     </Form-item>
-    <Form-item label="委托间隔：" prop="jiange">
+    <Form-item label="委托间隔：" prop="tradeInterval">
       <Row>
-        <Col span="18"><Input v-model="formValidate.jiange" icon="second"></Input></Col>
+        <Col span="18"><Input v-model="formValidate.tradeInterval" icon="second"></Input></Col>
         <Col span="5" offset="1">(参考值：10s)</Col>
       </Row>
     </Form-item>
@@ -71,34 +71,34 @@ export default {
     return {
       formValidate: {
         amount: '',
-        fanwei: '',
-        bili: '',
-        shangxian: '',
-        minPrice: '',
-        jiange: ''
+        orderDepth: '',
+        tradeRatio: '',
+        borderAmount: '',
+        borderPrice: '',
+        tradeInterval: ''
       },
       ruleValidate: {
         amount: [
           { required: true, message: '不能为空', trigger: 'blur' },
           { validator: validateNumber, trigger: 'blur' }
         ],
-        fanwei: [
+        orderDepth: [
           { required: true, message: '不能为空', trigger: 'blur' },
           { validator: validateFivePercent, trigger: 'blur' }
         ],
-        bili: [
+        tradeRatio: [
           { required: true, message: '不能为空', trigger: 'blur' },
           { validator: validateSdScale, trigger: 'blur' }
         ],
-        shangxian: [
+        borderAmount: [
           { required: true, message: '不能为空', trigger: 'blur' },
           { validator: validateNumber, trigger: 'blur' }
         ],
-        minPrice: [
+        borderPrice: [
           { required: true, message: '不能为空', trigger: 'blur' },
           { validator: validateNumber, trigger: 'blur' }
         ],
-        jiange: [
+        tradeInterval: [
           { required: true, message: '不能为空', trigger: 'blur' },
           { validator: validateEntrustInterval, trigger: 'blur' }
         ]

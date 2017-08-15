@@ -16,7 +16,7 @@ const reg = {
   },
   entrustInterval: function (value) {
     const float = Number(value)
-    return float > 1 && float <= 600
+    return float >= 1 && float <= 600
   }
 }
 

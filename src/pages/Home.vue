@@ -16,19 +16,13 @@ import moment from 'moment'
 export default {
   name: 'Home',
   created () {
-    this.$http.get('http://192.168.2.186:8080/history')
-    // this.$http.get('http://localhost:3001/history')
-    .then((response) => {
-      if (response.data && response.data.orders.length > 0) {
-        this.$store.state.homeData = response.data.orders;
-        this.dealHomeData()
-        this.dealedDataLength = response.data.orders.total || this.dealedData.length;
-        this.handlePageChang()
-      }
+    this.$store.dispatch('home/fetchHistory').then((response) => {
+      this.dealHomeData()
+      this.handlePageChang()
       this.$Message.success(`${response && response.statusText || ''}, 请求数据成功`);
     }, (error) => {
       this.$Message.error(`${error && error.statusText || ''}, 请求数据失败`);
-    });
+    })
   },
   methods: {
     selectStatus (state, type) {
@@ -49,7 +43,7 @@ export default {
       }
     },
     dealHomeData () {
-      this.dealedData = [].concat(this.$store.state.homeData)
+      this.dealedData = [].concat(this.$store.getters['home/getHomeData'])
       this.dealedData.map(item => {
         item.create_date = moment(item.create_date).format('YYYY MM DD, h:mm:ss a')
         return item

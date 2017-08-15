@@ -142,15 +142,13 @@ export default {
           formData = this.onDealFormAndUrl('BuyTimes', originData);
         }
       }
-      console.log('formData', formData);
-      console.log('url', url);
       if (formData === null) {
         this.$Message.error('表单验证没通过');
         return null;
       }
       this.$http({
         method:'post',
-        url: `http://192.168.2.186:8080/${url}`,
+        url: `http://192.168.170.104:8080/${url}`,
         data: formData,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -174,8 +172,8 @@ export default {
       return formData;
     },
     fetchTradetype () {
-      // this.$http.get('http://192.168.2.186:8080/tradetype')
-      this.$http.get('http://localhost:3001/tradetype')
+      this.$http.get('http://192.168.170.104:8080/tradetype')
+      // this.$http.get('http://localhost:3001/tradetype')
         .then(response => {
           if (response.data &&  response.data.data.length > 0) {
             this.tradeTypeArr = response.data.data;

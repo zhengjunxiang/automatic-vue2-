@@ -10,7 +10,7 @@ import Router from 'vue-router'
 import Home from '../pages/Home'
 import Order from '../pages/Order/'
 import Configuration from '../pages/Configuration'
-import User from '../pages/User'
+import User from '../pages/User/'
 import NotFoundComponent from '../pages/NotFoundComponent'
 
 Vue.use(Router)

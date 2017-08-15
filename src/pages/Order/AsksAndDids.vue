@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     fetchAsksAndDidsData () {
-      this.$http.get('http://192.168.2.186:8080/depth')
+      this.$http.get('http://192.168.170.104:8080/depth')
       // this.$http.get('http://localhost:3001/depth')
       .then(response => {
         const data = response.data;
@@ -46,13 +46,13 @@ export default {
             name: `卖(${Len - index})`,
             price: item[0],
             orders: item[1],
-            platform: 'mac'
+            platform: item[2] || 'win'
           }));
           this.bidsData = data.bids.map((item, index) => ({
             name: `买(${index + 1})`,
             price: item[0],
             orders: item[1],
-            platform: 'win'
+            platform: item[2] || 'mac'
           }));
           this.totalData = this.asksData.concat(this.bidsData);
         }
