@@ -12,7 +12,7 @@
   </Row>
 </template>
 <script>
-import moment from 'moment'
+import {selectStatus, formatDate} from '../utils/utils'
 export default {
   name: 'Home',
   created () {
@@ -25,27 +25,10 @@ export default {
     })
   },
   methods: {
-    selectStatus (state, type) {
-      const isColor = type === 'color'
-      switch (state - 0) {
-        case -1:
-          return isColor ? 'red' : '已撤销'
-        case 0:
-          return isColor ? 'orange' : '未成交'
-        case 1:
-          return isColor ? 'blue' : '部分成交'
-        case 2:
-          return isColor ? 'green' : '完全成交'
-        case 4:
-          return isColor ? 'yellow' : '撤单处理中'
-        default:
-          return '确认中'
-      }
-    },
     dealHomeData () {
       this.dealedData = [].concat(this.$store.getters['home/getHomeData'])
       this.dealedData.map(item => {
-        item.create_date = moment(item.create_date).format('YYYY MM DD, h:mm:ss a')
+        item.create_date = formatDate(item.create_date)
         return item
       })
     },
@@ -63,7 +46,11 @@ export default {
         }, {
           title: '平均价格 (btc_cny)',
           key: 'avg_price',
-          sortable: true
+          sortable: true,
+          render: (h, params) => {
+            const avg_price = params.row.avg_price === 'None' ? 0 : params.row.avg_price;
+            return h('span', {}, avg_price);
+          }
         }, {
           title: '价格 (btc_cny)',
           key: 'price',
@@ -80,8 +67,8 @@ export default {
           key: 'status',
           render: (h, params) => {
             const row = params.row
-            const color = this.selectStatus(row.status, 'color')
-            const text = this.selectStatus(row.status)
+            const color = selectStatus(row.status, 'color')
+            const text = selectStatus(row.status)
             return h('Tag', {
               props: {
                 type: 'border',

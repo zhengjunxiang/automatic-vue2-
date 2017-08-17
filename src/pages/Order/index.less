@@ -1,0 +1,73 @@
+.order-page {
+  height: 100%;
+  position: relative;
+  overflow: auto;
+  .deals-change-box {
+    position: relative;
+    width: 100%;
+    background: #ffffff;
+  }
+  .middle-box {
+    position: relative;
+    top: 0px;
+    overflow: auto;
+    width: 100%;
+  }
+  .logInformation-box {
+    background: #ffffff;
+    position: absolute;
+    bottom: 0px;
+    z-index: 99;
+  }
+  .ivu-menu {
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid @base;
+    .ivu-menu-item:hover {
+      border-bottom: 0px;
+    }
+    .ivu-menu-item-active {
+      background: #ffffff;
+      border-radius: 4px 4px 0 0;
+      border: 1px solid @base;
+      border-bottom: 0;
+    }
+  }
+  .ivu-icon-social,.ivu-icon-second {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .ivu-icon-social::before {
+    content: '%';
+  }
+  .ivu-icon-second::before {
+    content: 'S';
+  }
+  .block-dropdown,.ivu-dropdown {
+    display: block;
+    .ivu-btn {
+      width: 100%;
+      position: relative;
+      min-height: 30px;
+      .ivu-icon {
+        position: absolute;
+        right: 12px;
+        top: 10px;
+      }
+    }
+    .ivu-select-dropdown {
+      width: 100%;
+      left: 0px;
+    }
+  }
+  .ask-row {
+    .ivu-table-cell {
+      color: red;
+    }
+  }
+  .bids-row {
+    .ivu-table-cell {
+      color: green;
+    }
+  }
+}

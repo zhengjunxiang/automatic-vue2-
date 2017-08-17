@@ -1,5 +1,5 @@
 <template>
-  <Tabs value="sell" @on-click="handleTabsClick">
+  <Tabs value="sell" @on-click="handleTabsClick" type="card">
     <Tab-pane label="卖出" name="sell">
       <Form label-position="left" :label-width="90">
         <Form-item label="委托类型：">
@@ -82,6 +82,7 @@ import BuyBingShan from './forms/BuyBingShan';
 import BuyTimes from './forms/BuyTimes';
 export default {
   name: "sellAndBuy",
+  props: ['symbol'],
   components: {
     SellBingShan,
     SellTimes,
@@ -92,7 +93,7 @@ export default {
     return {
       FetchTradeType: 'fetching',
       formData: {
-        symbol: 'btc_cny',
+        symbol: this.symbol,
         orderType: 'sell'
       },
       tradeTypeArr: [],
@@ -120,6 +121,7 @@ export default {
     },
     handleSubmit () {
       let formData = {};
+      this.formData.symbol = this.symbol;
       const originData = {...this.formData};
       const tabType = originData.orderType;
       let url = '';
@@ -190,6 +192,3 @@ export default {
   }
 }
 </script>
-<style lang="less">
-
-</style>

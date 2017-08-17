@@ -1,0 +1,325 @@
+<template>
+  <div class="login-information">
+    <Tabs value="0" type="card">
+        <Tab-pane label="最近十笔未完成交易" name="0">
+          <div class="switch-box">
+            <span v-for="deal in deals" :class="{btn:true, active: dealsType === deal.type}" @click="dealsClick(deal.type)">{{deal.text}}</span>
+          </div>
+          <Table :columns="currentDealsColumns" :data="dataDeals"></Table>
+        </Tab-pane>
+        <Tab-pane label="历史委托" name="1">
+          <div class="switch-box">
+            <span v-for="deal in deals" :class="{btn:true, active: historyType === deal.type}" @click="historyClick(deal.type)">{{deal.text}}</span>
+          </div>
+          <Table :columns="currentHistoryColumns" :data="historyDeals"></Table>
+        </Tab-pane>
+    </Tabs>
+  </div>
+</template>
+<script>
+import {selectStatus, formatDate} from '../../utils/utils'
+export default {
+  name: "LogInformation",
+  props: ['symbol'],
+  data: () => ({
+    deals: [
+      {text: '普通委托', type: 'normalOrders'},
+      {text: '冰山委托', type: 'icebergTrade'},
+      {text: '时间加权委托', type: 'timeWeightTrade'},
+    ],
+    dealsType: 'normalOrders',
+    historyType: 'normalOrders',
+    currentDealsColumns: [],
+    currentHistoryColumns: [],
+    columnsNormal: [
+      {
+        title: '委托时间',
+        key: 'create_date'
+      }, {
+        title: '委托类型',
+        key: 'type',
+        width: 90,
+        render: (h, params) => {
+          const type = params.row.type === 'sell' ? '卖' : '买';
+          return h('span', {}, type);
+        }
+      }, {
+        title: '委托数量(฿)',
+        key: 'amount'
+      }, {
+        title: '委托价格(￥)',
+        key: 'price'
+      }, {
+        title: '成交数量',
+        key: 'deal_amount',
+        width: 90
+      }, {
+        title: '平均成交价',
+        key: 'avg_price'
+      }, {
+        title: '尚未成交',
+        key: 'undone',
+        width: 90
+      }, {
+        title: '操作/状态',
+        key: 'status',
+        render: (h, params) => {
+          const row = params.row;
+          const renders = setStatusRenders(row);
+          return () => {
+            return h('div', renders(h))
+          }
+        }
+      }
+    ],
+    columnsIceberg: [
+      {
+        title: '委托时间',
+        key: 'create_date'
+      }, {
+        title: '委托类型',
+        key: 'type',
+        width: 90,
+        render: (h, params) => {
+          const type = params.row.type === 'sell' ? '卖' : '买';
+          return h('span', {}, type);
+        }
+      }, {
+        title: '总委托数量',
+        key: 'amount'
+      },  {
+        title: '单次委托均值',
+        key: 'avg_amount'
+      }, {
+        title: '委托深度',
+        key: 'order_depth'
+      }, {
+        title: '最高/最低价格',
+        key: 'border_price'
+      }, {
+        title: '已成交量',
+        key: 'deal_amount'
+      }, {
+        title: '操作/状态',
+        key: 'status',
+        render: (h, params) => {
+          const row = params.row
+          const color = selectStatus(row.status, 'color')
+          const text = selectStatus(row.status)
+          return h('Tag', {
+            props: {
+              type: 'border',
+              color
+            }
+          }, text);
+        }
+      }
+    ],
+    columnsTimeWeight: [
+      {
+        title: '委托时间',
+        key: 'create_date'
+      }, {
+        title: '委托类型',
+        key: 'type',
+        width: 90,
+        render: (h, params) => {
+          const type = params.row.type === 'sell' ? '卖' : '买';
+          return h('span', {}, type);
+        }
+      }, {
+        title: '总委托数量',
+        key: 'amount'
+      },  {
+        title: '扫单范围',
+        key: 'order_depth'
+      }, {
+        title: '扫单比例',
+        key: 'trade_ratio'
+      }, {
+        title: '单笔上限',
+        key: 'border_amount'
+      }, {
+        title: '最高/最低价格',
+        key: 'border_price'
+      }, {
+        title: '委托间隔',
+        key: 'trade_interval'
+      }, {
+        title: '已成交量',
+        key: 'deal_amount'
+      }, {
+        title: '操作/状态',
+        key: 'status',
+        render: (h, params) => {
+          const row = params.row
+          const color = selectStatus(row.status, 'color')
+          const text = selectStatus(row.status)
+          return h('Tag', {
+            props: {
+              type: 'border',
+              color
+            }
+          }, text);
+        }
+      }
+    ],
+    dataDeals: [],
+    historyDeals: []
+  }),
+  methods: {
+    dealsClick (type) {
+      this.dealsType = type;
+      this.$nextTick(function () {
+        this.selectColumns(this.dealsType, 'deals');
+        this.fetchDealsTradeList();
+      })
+    },
+    historyClick (type) {
+      this.historyType = type;
+      this.$nextTick(function () {
+        this.selectColumns(this.historyType, 'history');
+        this.fetchHistoryTradeList();
+      })
+    },
+    setStatusRenders(row) {
+      const color = selectStatus(row.status, 'color');
+      const text = selectStatus(row.status);
+      const renders = [];
+      return (h) => {
+        if (row.status === 1 || row.status === 0) {
+          renders.push(h('Button', {
+            props: {
+              type: 'error',
+              size: 'small'
+            }
+          }, '撤销'))
+        }
+        renders.push(h('Tag', {
+          props: {
+            type: 'border',
+            color
+          }
+        }, text));
+        return renders;
+      }
+    },
+    selectColumns (deals, type) {
+      switch (deals) {
+        case 'normalOrders':
+          if (type === 'deals') {
+            this.currentDealsColumns = this.columnsNormal;
+          } else if (type === 'history') {
+            this.currentHistoryColumns = this.columnsNormal;
+          }
+          break;
+        case 'icebergTrade':
+          if (type === 'deals') {
+            this.currentDealsColumns = this.columnsIceberg;
+          } else if (type === 'history') {
+            this.currentHistoryColumns = this.columnsIceberg;
+          }
+          break;
+        case 'timeWeightTrade':
+          if (type === 'deals') {
+            this.currentDealsColumns = this.columnsTimeWeight;
+          } else if (type === 'history') {
+            this.currentHistoryColumns = this.columnsTimeWeight;
+          }
+          break;
+        default:
+          this.currentDealsColumns = this.columnsNormal;
+          this.currentHistoryColumns = this.columnsNormal;
+      }
+    },
+    formatDate (dates, key) {
+      if (!dates.length) return;
+      dates.map(date => {
+        date[key || 'create_date'] = formatDate(date.create_date);
+        return date;
+      });
+      return dates;
+    },
+    fetchDealsTradeList() {
+      this.$http.get(`http://192.168.170.104:8080/tradeList?symbol=${this.symbol}&isFinish=0&type=${this.dealsType}`)
+        .then(response => {
+          const data = Array.prototype.slice.call(response.data.orders, 0);
+          data.map(item => {
+            item.undone = item.amount - item.amount;
+          });
+          this.dataDeals = this.formatDate(data);
+          response.data.alertData.map(item => {
+            this.$Notice.open({
+              title: `${item.symbol.split('_')[0].toUpperCase()}${item.type === 'sell' ? '卖出' : '买入'}限价单已完全成交:`,
+              desc: `<p>成交均价：￥${item.avg_price} 成交数量：฿${item.deal_amount}</P>
+                <p>成交平台：${item.platform}</P>
+              `,
+              duration: 6
+            });
+          });
+        }, error => {
+          this.$Message.error(`${error && error.statusText || 'TradeList类型获取失败'}, `);
+        })
+    },
+    fetchHistoryTradeList() {
+      this.$http.get(`http://192.168.170.104:8080/tradeList?symbol=${this.symbol}&isFinish=1&type=${this.historyType}`)
+        .then(response => {
+          const data = Array.prototype.slice.call(response.data.orders, 0);
+          data.map(item => {
+            item.undone = item.amount - item.amount;
+          });
+          this.historyDeals = this.formatDate(data);
+          response.data.alertData.map(item => {
+            this.$Notice.open({
+              title: `${item.symbol.split('_')[0].toUpperCase()}${item.type === 'sell' ? '卖出' : '买入'}限价单已完全成交:`,
+              desc: `<p>成交均价：￥${item.avg_price} 成交数量：฿${item.deal_amount}</P>
+                <p>成交平台：${item.platform}</P>
+              `,
+              duration: 6
+            });
+          });
+        }, error => {
+          this.$Message.error(`${error && error.statusText || 'TradeList类型获取失败'}, `);
+        })
+    }
+  },
+  created () {
+    this.currentDealsColumns = this.columnsNormal;
+    this.currentHistoryColumns = this.columnsNormal;
+    this.fetchDealsTradeList();
+    this.fetchHistoryTradeList();
+    // setInterval(() => {
+    //   this.fetchDealsTradeList();
+    //   this.fetchHistoryTradeList();
+    // }, 1000)
+  }
+}
+</script>
+<style lang="less" scoped>
+@import '../../style/variable/index.less';
+.login-information {
+  margin-top: 10px;
+  .ivu-tabs-tabpane {
+    .switch-box {
+      padding: 0px 10px 10px;
+    }
+    .btn {
+      display: inline-block;
+      height: 30px;
+      line-height: 30px;
+      font-size: 12px;
+      cursor: pointer;
+      border: 1px solid @dark-light;
+      color: @dark-light;
+      border-radius: 4px;
+      padding: 0 15px;
+      margin-right: 40px;
+    }
+    .btn.active {
+      color: #ffffff;
+      background: @base;
+      border: @base;
+    }
+  }
+}
+</style>

@@ -1,62 +1,69 @@
 <template>
-  <Row :gutter="30" class="order-page">
-    <Col :md="12">
-      <sell-and-buy></sell-and-buy>
+  <Row :gutter="30" class="order-page" id="orderPageBox">
+    <Col span="24" class="deals-change-box" id="dealsChangeBox">
+      <Menu mode="horizontal" active-name="btc_cny" style="margin-bottom: 10px;" @on-select="handleDealSelect">
+        <Menu-item name="btc_cny">
+          BTC交易
+        </Menu-item>
+        <Menu-item name="ltc_cny">
+          LTC交易
+        </Menu-item>
+      </Menu>
     </Col>
-    <Col :md="12">
-      <asks-and-dids></asks-and-dids>
+    <div class="middle-box" id="middleBox">
+      <Col :md="12">
+        <sell-and-buy :symbol="symbol"></sell-and-buy>
+      </Col>
+      <Col :md="12">
+        <asks-and-dids :symbol="symbol" ref="asksAndDids"></asks-and-dids>
+      </Col>
+    </div>
+    <Col span="24" class="logInformation-box" id="logInformationBox">
+      <log-information :symbol="symbol" ref="logInformation"></log-information>
     </Col>
   </Row>
 </template>
 <script>
 import SellAndBuy from './SellAndBuy';
 import AsksAndDids from './AsksAndDids';
+import LogInformation from './LogInformation';
 export default {
   name: 'order',
+  data () {
+    return {
+      symbol: 'btc_cny',
+      type: {
+      }
+    }
+  },
   components: {
     SellAndBuy,
-    AsksAndDids
+    AsksAndDids,
+    LogInformation
+  },
+  methods: {
+    handleDealSelect(name) {
+      this.symbol = name;
+      setTimeout(() => {
+        this.$refs.asksAndDids.fetchAsksAndDidsData();
+        this.$refs.logInformation.fetchDealsTradeList();
+        this.$refs.logInformation.fetchHistoryTradeList();
+      }, 60);
+    }
+  },
+  mounted () {
+    const dealsChangeBoxDom = document.getElementById('dealsChangeBox');
+    const middleBoxDom = document.getElementById('middleBox');
+    const logInformationBoxDom = document.getElementById('logInformationBox');
+    const orderPageBoxDom = document.getElementById('orderPageBox');
+    middleBoxDom.style.height = orderPageBoxDom.offsetHeight - dealsChangeBoxDom.offsetHeight - logInformationBoxDom.offsetHeight + 'px';
+    window.onresize = () => {
+      middleBoxDom.style.height = orderPageBoxDom.offsetHeight - dealsChangeBoxDom.offsetHeight - logInformationBoxDom.offsetHeight + 'px';
+    };
   }
 }
 </script>
 <style lang="less">
-.order-page {
-  .ivu-icon-social,.ivu-icon-second {
-    font-size: 14px;
-    font-weight: bold;
-  }
-  .ivu-icon-social::before {
-    content: '%';
-  }
-  .ivu-icon-second::before {
-    content: 'S';
-  }
-  .block-dropdown,.ivu-dropdown {
-    display: block;
-    .ivu-btn {
-      width: 100%;
-      position: relative;
-      min-height: 30px;
-      .ivu-icon {
-        position: absolute;
-        right: 12px;
-        top: 10px;
-      }
-    }
-    .ivu-select-dropdown {
-      width: 100%;
-      left: 0px;
-    }
-  }
-  .ask-row {
-    .ivu-table-cell {
-      color: red;
-    }
-  }
-  .bids-row {
-    .ivu-table-cell {
-      color: green;
-    }
-  }
-}
+@import '../../style/variable/index.less';
+@import './index.less';
 </style>

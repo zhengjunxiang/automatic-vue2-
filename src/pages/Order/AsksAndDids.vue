@@ -1,10 +1,11 @@
 <template>
-  <Table :row-class-name="rowClassName" :columns="columnsAsksAndBids" :data="totalData"></Table>
+  <Table class="asksAndDids-table" :row-class-name="rowClassName" :columns="columnsAsksAndBids" :data="totalData"></Table>
 </template>
 <script>
 export default {
   name: "asksAndDids",
   timer: null,
+  props: ['symbol'],
   data () {
     return {
       columnsAsksAndBids: [
@@ -36,7 +37,8 @@ export default {
   },
   methods: {
     fetchAsksAndDidsData () {
-      this.$http.get('http://192.168.170.104:8080/depth')
+      this.totalData = [];
+      this.$http.get(`http://192.168.170.104:8080/depth?symbol=${this.symbol}`)
       // this.$http.get('http://localhost:3001/depth')
       .then(response => {
         const data = response.data;
@@ -72,6 +74,3 @@ export default {
   }
 }
 </script>
-<style lang="less">
-
-</style>

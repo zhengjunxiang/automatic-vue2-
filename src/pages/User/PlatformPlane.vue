@@ -52,6 +52,9 @@ export default {
 <style lang="less" scoped>
   .platform-plane {
     border: 1px solid #dddddd;
+    float: left;
+    width: 47%;
+    margin-right: 3%;
     .header {
       padding: 0 10px;
       min-height: 30px;
