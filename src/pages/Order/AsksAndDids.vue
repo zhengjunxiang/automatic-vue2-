@@ -30,14 +30,13 @@ export default {
   },
   created () {
     this.fetchAsksAndDidsData();
-    // this.timer = window.setInterval(this.fetchAsksAndDidsData, 3000);
+    this.timer = window.setInterval(this.fetchAsksAndDidsData, 2000);
   },
   beforeDestroy () {
     window.clearInterval(this.timer);
   },
   methods: {
     fetchAsksAndDidsData () {
-      this.totalData = [];
       this.$http.get(`http://192.168.170.104:8080/depth?symbol=${this.symbol}`)
       // this.$http.get('http://localhost:3001/depth')
       .then(response => {

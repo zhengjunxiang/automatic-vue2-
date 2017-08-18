@@ -1,7 +1,7 @@
 <template>
   <div class="login-information">
     <Tabs value="0" type="card">
-        <Tab-pane label="最近十笔未完成交易" name="0">
+        <Tab-pane label="最近五笔未完成交易" name="0">
           <div class="switch-box">
             <span v-for="deal in deals" :class="{btn:true, active: dealsType === deal.type}" @click="dealsClick(deal.type)">{{deal.text}}</span>
           </div>
@@ -20,174 +20,187 @@
 import {selectStatus, formatDate} from '../../utils/utils'
 export default {
   name: "LogInformation",
-  props: ['symbol'],
-  data: () => ({
-    deals: [
-      {text: '普通委托', type: 'normalOrders'},
-      {text: '冰山委托', type: 'icebergTrade'},
-      {text: '时间加权委托', type: 'timeWeightTrade'},
-    ],
-    dealsType: 'normalOrders',
-    historyType: 'normalOrders',
-    currentDealsColumns: [],
-    currentHistoryColumns: [],
-    columnsNormal: [
-      {
-        title: '委托时间',
-        key: 'create_date'
-      }, {
-        title: '委托类型',
-        key: 'type',
-        width: 90,
-        render: (h, params) => {
-          const type = params.row.type === 'sell' ? '卖' : '买';
-          return h('span', {}, type);
-        }
-      }, {
-        title: '委托数量(฿)',
-        key: 'amount'
-      }, {
-        title: '委托价格(￥)',
-        key: 'price'
-      }, {
-        title: '成交数量',
-        key: 'deal_amount',
-        width: 90
-      }, {
-        title: '平均成交价',
-        key: 'avg_price'
-      }, {
-        title: '尚未成交',
-        key: 'undone',
-        width: 90
-      }, {
-        title: '操作/状态',
-        key: 'status',
-        render: (h, params) => {
-          const row = params.row;
-          const renders = setStatusRenders(row);
-          return () => {
-            return h('div', renders(h))
+  props: ['symbol', 'setMiddleBoxDomH'],
+  data () {
+    return {
+      deals: [
+        {text: '普通委托', type: 'normalOrders'},
+        {text: '冰山委托', type: 'icebergTrade'},
+        {text: '时间加权委托', type: 'timeWeightTrade'},
+      ],
+      dealsType: 'normalOrders',
+      historyType: 'normalOrders',
+      currentDealsColumns: [],
+      currentHistoryColumns: [],
+      columnsNormal: [
+        {
+          title: '委托时间',
+          key: 'create_date'
+        }, {
+          title: '委托类型',
+          key: 'type',
+          width: 90,
+          render: (h, params) => {
+            const type = params.row.type === 'sell' ? '卖' : '买';
+            return h('span', {}, type);
+          }
+        }, {
+          title: '委托数量(฿)',
+          key: 'amount'
+        }, {
+          title: '委托价格(￥)',
+          key: 'price'
+        }, {
+          title: '成交数量',
+          key: 'deal_amount',
+          width: 90
+        }, {
+          title: '平均成交价',
+          key: 'avg_price'
+        }, {
+          title: '尚未成交',
+          key: 'undone',
+          width: 90
+        }, {
+          title: '操作/状态',
+          key: 'status',
+          render: (h, params) => {
+            // const row = params.row;
+            // const renders = this.setStatusRenders(row);
+            // console.log('renders(h)', renders(h));
+            // return () => {
+            //   return h('div', renders(h))
+            // }
+            const row = params.row
+            const color = selectStatus(row.status, 'color')
+            const text = selectStatus(row.status)
+            return h('Tag', {
+              props: {
+                type: 'border',
+                color
+              }
+            }, text);
           }
         }
-      }
-    ],
-    columnsIceberg: [
-      {
-        title: '委托时间',
-        key: 'create_date'
-      }, {
-        title: '委托类型',
-        key: 'type',
-        width: 90,
-        render: (h, params) => {
-          const type = params.row.type === 'sell' ? '卖' : '买';
-          return h('span', {}, type);
+      ],
+      columnsIceberg: [
+        {
+          title: '委托时间',
+          key: 'create_date'
+        }, {
+          title: '委托类型',
+          key: 'type',
+          width: 90,
+          render: (h, params) => {
+            const type = params.row.type === 'sell' ? '卖' : '买';
+            return h('span', {}, type);
+          }
+        }, {
+          title: '总委托数量',
+          key: 'amount'
+        },  {
+          title: '单次委托均值',
+          key: 'avg_amount'
+        }, {
+          title: '委托深度',
+          key: 'order_depth'
+        }, {
+          title: '最高/最低价格',
+          key: 'border_price'
+        }, {
+          title: '已成交量',
+          key: 'deal_amount'
+        }, {
+          title: '操作/状态',
+          key: 'status',
+          render: (h, params) => {
+            const row = params.row
+            const color = selectStatus(row.status, 'color')
+            const text = selectStatus(row.status)
+            return h('Tag', {
+              props: {
+                type: 'border',
+                color
+              }
+            }, text);
+          }
         }
-      }, {
-        title: '总委托数量',
-        key: 'amount'
-      },  {
-        title: '单次委托均值',
-        key: 'avg_amount'
-      }, {
-        title: '委托深度',
-        key: 'order_depth'
-      }, {
-        title: '最高/最低价格',
-        key: 'border_price'
-      }, {
-        title: '已成交量',
-        key: 'deal_amount'
-      }, {
-        title: '操作/状态',
-        key: 'status',
-        render: (h, params) => {
-          const row = params.row
-          const color = selectStatus(row.status, 'color')
-          const text = selectStatus(row.status)
-          return h('Tag', {
-            props: {
-              type: 'border',
-              color
-            }
-          }, text);
+      ],
+      columnsTimeWeight: [
+        {
+          title: '委托时间',
+          key: 'create_date'
+        }, {
+          title: '委托类型',
+          key: 'type',
+          width: 90,
+          render: (h, params) => {
+            const type = params.row.type === 'sell' ? '卖' : '买';
+            return h('span', {}, type);
+          }
+        }, {
+          title: '总委托数量',
+          key: 'amount'
+        },  {
+          title: '扫单范围',
+          key: 'order_depth'
+        }, {
+          title: '扫单比例',
+          key: 'trade_ratio'
+        }, {
+          title: '单笔上限',
+          key: 'border_amount'
+        }, {
+          title: '最高/最低价格',
+          key: 'border_price'
+        }, {
+          title: '委托间隔',
+          key: 'trade_interval'
+        }, {
+          title: '已成交量',
+          key: 'deal_amount'
+        }, {
+          title: '操作/状态',
+          key: 'status',
+          render: (h, params) => {
+            const row = params.row
+            const color = selectStatus(row.status, 'color')
+            const text = selectStatus(row.status)
+            return h('Tag', {
+              props: {
+                type: 'border',
+                color
+              }
+            }, text);
+          }
         }
-      }
-    ],
-    columnsTimeWeight: [
-      {
-        title: '委托时间',
-        key: 'create_date'
-      }, {
-        title: '委托类型',
-        key: 'type',
-        width: 90,
-        render: (h, params) => {
-          const type = params.row.type === 'sell' ? '卖' : '买';
-          return h('span', {}, type);
-        }
-      }, {
-        title: '总委托数量',
-        key: 'amount'
-      },  {
-        title: '扫单范围',
-        key: 'order_depth'
-      }, {
-        title: '扫单比例',
-        key: 'trade_ratio'
-      }, {
-        title: '单笔上限',
-        key: 'border_amount'
-      }, {
-        title: '最高/最低价格',
-        key: 'border_price'
-      }, {
-        title: '委托间隔',
-        key: 'trade_interval'
-      }, {
-        title: '已成交量',
-        key: 'deal_amount'
-      }, {
-        title: '操作/状态',
-        key: 'status',
-        render: (h, params) => {
-          const row = params.row
-          const color = selectStatus(row.status, 'color')
-          const text = selectStatus(row.status)
-          return h('Tag', {
-            props: {
-              type: 'border',
-              color
-            }
-          }, text);
-        }
-      }
-    ],
-    dataDeals: [],
-    historyDeals: []
-  }),
+      ],
+      dataDeals: [],
+      historyDeals: []
+    }
+  },
   methods: {
     dealsClick (type) {
       this.dealsType = type;
       this.$nextTick(function () {
         this.selectColumns(this.dealsType, 'deals');
-        this.fetchDealsTradeList();
+        this.fetchDealsTradeList(this.setMiddleBoxDomH);
       })
     },
     historyClick (type) {
       this.historyType = type;
       this.$nextTick(function () {
         this.selectColumns(this.historyType, 'history');
-        this.fetchHistoryTradeList();
+        this.fetchHistoryTradeList(this.setMiddleBoxDomH);
       })
     },
     setStatusRenders(row) {
-      const color = selectStatus(row.status, 'color');
-      const text = selectStatus(row.status);
+      const status = row.status;
+      const color = selectStatus(status, 'color');
+      const text = selectStatus(status);
       const renders = [];
       return (h) => {
-        if (row.status === 1 || row.status === 0) {
+        if (status === 1 || status === 0) {
           renders.push(h('Button', {
             props: {
               type: 'error',
@@ -240,7 +253,7 @@ export default {
       });
       return dates;
     },
-    fetchDealsTradeList() {
+    fetchDealsTradeList(cd) {
       this.$http.get(`http://192.168.170.104:8080/tradeList?symbol=${this.symbol}&isFinish=0&type=${this.dealsType}`)
         .then(response => {
           const data = Array.prototype.slice.call(response.data.orders, 0);
@@ -257,11 +270,14 @@ export default {
               duration: 6
             });
           });
+          this.$nextTick(() => {
+            cd();
+          });
         }, error => {
           this.$Message.error(`${error && error.statusText || 'TradeList类型获取失败'}, `);
         })
     },
-    fetchHistoryTradeList() {
+    fetchHistoryTradeList(cd) {
       this.$http.get(`http://192.168.170.104:8080/tradeList?symbol=${this.symbol}&isFinish=1&type=${this.historyType}`)
         .then(response => {
           const data = Array.prototype.slice.call(response.data.orders, 0);
@@ -278,6 +294,9 @@ export default {
               duration: 6
             });
           });
+          this.$nextTick(() => {
+            cd();
+          });
         }, error => {
           this.$Message.error(`${error && error.statusText || 'TradeList类型获取失败'}, `);
         })
@@ -286,12 +305,12 @@ export default {
   created () {
     this.currentDealsColumns = this.columnsNormal;
     this.currentHistoryColumns = this.columnsNormal;
-    this.fetchDealsTradeList();
-    this.fetchHistoryTradeList();
-    // setInterval(() => {
-    //   this.fetchDealsTradeList();
-    //   this.fetchHistoryTradeList();
-    // }, 1000)
+    this.fetchDealsTradeList(this.setMiddleBoxDomH);
+    this.fetchHistoryTradeList(this.setMiddleBoxDomH);
+    setInterval(() => {
+      this.fetchDealsTradeList(this.setMiddleBoxDomH);
+      this.fetchHistoryTradeList(this.setMiddleBoxDomH);
+    }, 1000)
   }
 }
 </script>

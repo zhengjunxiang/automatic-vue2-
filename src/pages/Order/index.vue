@@ -19,7 +19,7 @@
       </Col>
     </div>
     <Col span="24" class="logInformation-box" id="logInformationBox">
-      <log-information :symbol="symbol" ref="logInformation"></log-information>
+      <log-information :symbol="symbol" :setMiddleBoxDomH="setMiddleBoxDomH" ref="logInformation"></log-information>
     </Col>
   </Row>
 </template>
@@ -44,21 +44,25 @@ export default {
   methods: {
     handleDealSelect(name) {
       this.symbol = name;
-      setTimeout(() => {
+      this.$nextTick(() => {
         this.$refs.asksAndDids.fetchAsksAndDidsData();
-        this.$refs.logInformation.fetchDealsTradeList();
-        this.$refs.logInformation.fetchHistoryTradeList();
-      }, 60);
+        this.$refs.logInformation.fetchDealsTradeList(this.setMiddleBoxDomH);
+        this.$refs.logInformation.fetchHistoryTradeList(this.setMiddleBoxDomH);
+      });
+    },
+    setMiddleBoxDomH() {
+      const dealsChangeBoxDom = document.getElementById('dealsChangeBox');
+      const middleBoxDom = document.getElementById('middleBox');
+      const logInformationBoxDom = document.getElementById('logInformationBox');
+      const orderPageBoxDom = document.getElementById('orderPageBox');
+      middleBoxDom.style.height = orderPageBoxDom.offsetHeight - dealsChangeBoxDom.offsetHeight - logInformationBoxDom.offsetHeight + 'px';
     }
   },
   mounted () {
-    const dealsChangeBoxDom = document.getElementById('dealsChangeBox');
-    const middleBoxDom = document.getElementById('middleBox');
-    const logInformationBoxDom = document.getElementById('logInformationBox');
-    const orderPageBoxDom = document.getElementById('orderPageBox');
-    middleBoxDom.style.height = orderPageBoxDom.offsetHeight - dealsChangeBoxDom.offsetHeight - logInformationBoxDom.offsetHeight + 'px';
+    this.setMiddleBoxDomH();
+    const me = this;
     window.onresize = () => {
-      middleBoxDom.style.height = orderPageBoxDom.offsetHeight - dealsChangeBoxDom.offsetHeight - logInformationBoxDom.offsetHeight + 'px';
+      me.setMiddleBoxDomH();
     };
   }
 }
