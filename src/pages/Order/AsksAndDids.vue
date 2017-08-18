@@ -57,9 +57,8 @@ export default {
           }));
           this.totalData = this.asksData.concat(this.bidsData);
         }
-        // this.$Message.success(`${response && response.statusText || ''}, 请求数据成功`);
       }, (error) => {
-        // this.$Message.error(`${error && error.statusText || ''}, 请求数据失败`);
+        this.$Message.error(`${error && error.statusText || ''}, 请求数据失败`);
       })
     },
     rowClassName (row, index) {

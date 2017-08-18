@@ -6,12 +6,18 @@
             <span v-for="deal in deals" :class="{btn:true, active: dealsType === deal.type}" @click="dealsClick(deal.type)">{{deal.text}}</span>
           </div>
           <Table :columns="currentDealsColumns" :data="dataDeals"></Table>
+          <div v-if="isOverFives" class="lookMore" @click="handleLookMoreClick">
+            查看更多
+          </div>
         </Tab-pane>
         <Tab-pane label="历史委托" name="1">
           <div class="switch-box">
             <span v-for="deal in deals" :class="{btn:true, active: historyType === deal.type}" @click="historyClick(deal.type)">{{deal.text}}</span>
           </div>
           <Table :columns="currentHistoryColumns" :data="historyDeals"></Table>
+          <div v-if="isOverFives" class="lookMore" @click="handleLookMoreClick">
+            查看更多
+          </div>
         </Tab-pane>
     </Tabs>
   </div>
@@ -20,6 +26,7 @@
 import {selectStatus, formatDate} from '../../utils/utils'
 export default {
   name: "LogInformation",
+  timer: null,
   props: ['symbol', 'setMiddleBoxDomH'],
   data () {
     return {
@@ -28,6 +35,7 @@ export default {
         {text: '冰山委托', type: 'icebergTrade'},
         {text: '时间加权委托', type: 'timeWeightTrade'},
       ],
+      isOverFives: false,
       dealsType: 'normalOrders',
       historyType: 'normalOrders',
       currentDealsColumns: [],
@@ -65,21 +73,11 @@ export default {
           title: '操作/状态',
           key: 'status',
           render: (h, params) => {
-            // const row = params.row;
-            // const renders = this.setStatusRenders(row);
-            // console.log('renders(h)', renders(h));
-            // return () => {
-            //   return h('div', renders(h))
-            // }
-            const row = params.row
+            const row = params.row;
             const color = selectStatus(row.status, 'color')
             const text = selectStatus(row.status)
-            return h('Tag', {
-              props: {
-                type: 'border',
-                color
-              }
-            }, text);
+            const renders = this.setStatusRenders(row);
+            return h('div', renders(h))
           }
         }
       ],
@@ -114,15 +112,11 @@ export default {
           title: '操作/状态',
           key: 'status',
           render: (h, params) => {
-            const row = params.row
+            const row = params.row;
             const color = selectStatus(row.status, 'color')
             const text = selectStatus(row.status)
-            return h('Tag', {
-              props: {
-                type: 'border',
-                color
-              }
-            }, text);
+            const renders = this.setStatusRenders(row);
+            return h('div', renders(h))
           }
         }
       ],
@@ -163,15 +157,11 @@ export default {
           title: '操作/状态',
           key: 'status',
           render: (h, params) => {
-            const row = params.row
+            const row = params.row;
             const color = selectStatus(row.status, 'color')
             const text = selectStatus(row.status)
-            return h('Tag', {
-              props: {
-                type: 'border',
-                color
-              }
-            }, text);
+            const renders = this.setStatusRenders(row);
+            return h('div', renders(h))
           }
         }
       ],
@@ -194,17 +184,23 @@ export default {
         this.fetchHistoryTradeList(this.setMiddleBoxDomH);
       })
     },
+    handleLookMoreClick() {
+      this.$router.push('/');
+    },
     setStatusRenders(row) {
       const status = row.status;
       const color = selectStatus(status, 'color');
       const text = selectStatus(status);
       const renders = [];
       return (h) => {
-        if (status === 1 || status === 0) {
+        if (Number(status) === 1 || Number(status) === 0) {
           renders.push(h('Button', {
             props: {
               type: 'error',
               size: 'small'
+            },
+            style: {
+              marginRight: '8px'
             }
           }, '撤销'))
         }
@@ -257,6 +253,7 @@ export default {
       this.$http.get(`http://192.168.170.104:8080/tradeList?symbol=${this.symbol}&isFinish=0&type=${this.dealsType}`)
         .then(response => {
           const data = Array.prototype.slice.call(response.data.orders, 0);
+          data.length > 5 ? this.isOverFives = true : this.isOverFives = false;
           data.map(item => {
             item.undone = item.amount - item.amount;
           });
@@ -281,6 +278,7 @@ export default {
       this.$http.get(`http://192.168.170.104:8080/tradeList?symbol=${this.symbol}&isFinish=1&type=${this.historyType}`)
         .then(response => {
           const data = Array.prototype.slice.call(response.data.orders, 0);
+          data.length > 5 ? this.isOverFives = true : this.isOverFives = false;
           data.map(item => {
             item.undone = item.amount - item.amount;
           });
@@ -307,10 +305,13 @@ export default {
     this.currentHistoryColumns = this.columnsNormal;
     this.fetchDealsTradeList(this.setMiddleBoxDomH);
     this.fetchHistoryTradeList(this.setMiddleBoxDomH);
-    setInterval(() => {
-      this.fetchDealsTradeList(this.setMiddleBoxDomH);
-      this.fetchHistoryTradeList(this.setMiddleBoxDomH);
-    }, 1000)
+    // this.timer = window.setInterval(() => {
+    //   this.fetchDealsTradeList(this.setMiddleBoxDomH);
+    //   this.fetchHistoryTradeList(this.setMiddleBoxDomH);
+    // }, 1000)
+  },
+  beforeDestroy () {
+    window.clearInterval(this.timer);
   }
 }
 </script>
@@ -321,6 +322,12 @@ export default {
   .ivu-tabs-tabpane {
     .switch-box {
       padding: 0px 10px 10px;
+    }
+    .lookMore {
+      text-align: center;
+      line-height: 30px;
+      cursor: pointer;
+      color: @base;
     }
     .btn {
       display: inline-block;
