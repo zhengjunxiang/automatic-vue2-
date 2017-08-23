@@ -1,7 +1,7 @@
 <template>
   <div class="login-information">
-    <Tabs value="0" type="card">
-        <Tab-pane label="最近五笔未完成交易" name="0">
+    <Tabs value="deal" type="card" @on-click="handleChangeTab">
+        <Tab-pane label="最近五笔未完成交易" name="deal">
           <div class="switch-box">
             <span v-for="deal in deals" :class="{btn:true, active: dealsType === deal.type}" @click="dealsClick(deal.type)">{{deal.text}}</span>
           </div>
@@ -10,7 +10,7 @@
             查看更多
           </div>
         </Tab-pane>
-        <Tab-pane label="历史委托" name="1">
+        <Tab-pane label="历史委托" name="history">
           <div class="switch-box">
             <span v-for="deal in deals" :class="{btn:true, active: historyType === deal.type}" @click="historyClick(deal.type)">{{deal.text}}</span>
           </div>
@@ -36,6 +36,7 @@ export default {
         {text: '时间加权委托', type: 'timeWeightTrade'},
       ],
       isOverFives: false,
+      currentTab: 'deal',
       dealsType: 'normalOrders',
       historyType: 'normalOrders',
       currentDealsColumns: [],
@@ -64,11 +65,21 @@ export default {
           width: 90
         }, {
           title: '平均成交价',
-          key: 'avg_price'
+          key: 'avg_price',
+          render: (h, params) => {
+            const row = params.row;
+            if (row.avg_price === 'None') {
+              return h('span', {}, '0');
+            }
+            return h('span', {}, row.avg_price);
+          }
         }, {
           title: '尚未成交',
           key: 'undone',
           width: 90
+        }, {
+          title: '交易所名称',
+          key: 'platform'
         }, {
           title: '操作/状态',
           key: 'status',
@@ -177,6 +188,9 @@ export default {
         this.fetchDealsTradeList(this.setMiddleBoxDomH);
       })
     },
+    handleChangeTab (name) {
+      this.currentTab = name;
+    },
     historyClick (type) {
       this.historyType = type;
       this.$nextTick(function () {
@@ -272,6 +286,7 @@ export default {
           });
         }, error => {
           this.$Message.error(`${error && error.statusText || 'TradeList类型获取失败'}, `);
+          this.dataDeals = [];
         })
     },
     fetchHistoryTradeList(cd) {
@@ -297,6 +312,7 @@ export default {
           });
         }, error => {
           this.$Message.error(`${error && error.statusText || 'TradeList类型获取失败'}, `);
+          this.historyDeals = [];
         })
     }
   },
@@ -304,13 +320,17 @@ export default {
     this.currentDealsColumns = this.columnsNormal;
     this.currentHistoryColumns = this.columnsNormal;
     this.fetchDealsTradeList(this.setMiddleBoxDomH);
-    this.fetchHistoryTradeList(this.setMiddleBoxDomH);
-    // this.timer = window.setInterval(() => {
-    //   this.fetchDealsTradeList(this.setMiddleBoxDomH);
-    //   this.fetchHistoryTradeList(this.setMiddleBoxDomH);
-    // }, 1000)
   },
-  beforeDestroy () {
+  activated() {
+    this.timer = window.setInterval(() => {
+      if (this.currentTab === 'deal') {
+        this.fetchDealsTradeList(this.setMiddleBoxDomH);
+      } else if (this.currentTab === 'history') {
+        this.fetchHistoryTradeList(this.setMiddleBoxDomH);
+      }
+    }, 1000)
+  },
+  deactivated() {
     window.clearInterval(this.timer);
   }
 }

@@ -30,9 +30,11 @@ export default {
   },
   created () {
     this.fetchAsksAndDidsData();
+  },
+  activated() {
     this.timer = window.setInterval(this.fetchAsksAndDidsData, 2000);
   },
-  beforeDestroy () {
+  deactivated() {
     window.clearInterval(this.timer);
   },
   methods: {

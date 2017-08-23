@@ -3,7 +3,7 @@ const Path = require('path');
 const Webpack = require('webpack');
 const Merge = require('webpack-merge');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
-const CommonConfig = require('./webpack.com.js');
+const CommonConfig = require('./webpack.base.js');
 const PORT = 9000;
 
 const config = function(env) {
@@ -38,7 +38,7 @@ const config = function(env) {
       host: '192.168.170.140',
       open: true,
       historyApiFallback: true,
-      stats: {errors: true, errorDetails: true, warnings: false, chunks: false},
+      stats: {chunks: false, color: true, modules: false},
       publicPath: "/",
       contentBase: Path.resolve(__dirname, 'dist'),
       overlay: {warnings: true, errors: true},

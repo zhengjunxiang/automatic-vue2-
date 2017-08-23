@@ -11,10 +11,10 @@ app.get('/history', (req, res) => {
   res.json(
     {orders: [
       {amount: 10, avg_price: 11, price: 12, deal_amount: 13, create_date: 32455234123, status: -1},
-      {amount: 10, avg_price: 11, price: 12, deal_amount: 13, create_date: 32455234123, status: -1},
-      {amount: 10, avg_price: 11, price: 12, deal_amount: 13, create_date: 32455234123, status: -1},
-      {amount: 10, avg_price: 11, price: 12, deal_amount: 13, create_date: 32455234123, status: -1},
-      {amount: 10, avg_price: 11, price: 12, deal_amount: 13, create_date: 32455234123, status: -1},
+      {amount: 10, avg_price: 11, price: 12, deal_amount: 13, create_date: 32455234123, status: 0},
+      {amount: 10, avg_price: 11, price: 12, deal_amount: 13, create_date: 32455234123, status: 1},
+      {amount: 10, avg_price: 11, price: 12, deal_amount: 13, create_date: 32455234123, status: 2},
+      {amount: 10, avg_price: 11, price: 12, deal_amount: 13, create_date: 32455234123, status: 4},
       {amount: 10, avg_price: 11, price: 12, deal_amount: 13, create_date: 32455234123, status: -1},
       {amount: 10, avg_price: 11, price: 12, deal_amount: 13, create_date: 32455234123, status: -1},
       {amount: 10, avg_price: 11, price: 12, deal_amount: 13, create_date: 32455234123, status: -1},

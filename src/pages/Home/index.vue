@@ -27,6 +27,7 @@ export default {
   methods: {
     dealHomeData () {
       this.dealedData = [].concat(this.$store.getters['home/getHomeData'])
+      this.dealedDataLength = this.dealedData.length
       this.dealedData.map(item => {
         item.create_date = formatDate(item.create_date)
         return item

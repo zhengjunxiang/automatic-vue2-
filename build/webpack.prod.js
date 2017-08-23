@@ -4,12 +4,12 @@ const Webpack = require('webpack');
 const Merge = require('webpack-merge');
 const WebpackChunkHash = require("webpack-chunk-hash");
 const ChunkManifestPlugin = require("chunk-manifest-webpack-plugin");
-const CommonConfig = require('./webpack.com.js');
+const CommonConfig = require('./webpack.base.js');
 
 const config = function(env) {
   return Merge(CommonConfig, {
     stats: {
-      errors: true, errorDetails: true, warnings: false, chunks: false
+      modules: false, errors: true, warnings: false, chunks: false
     },
     // devtool: 'source-map',
     plugins: [
@@ -20,11 +20,11 @@ const config = function(env) {
       new Webpack.DefinePlugin({
         'process.env': {'NODE_ENV': JSON.stringify('production')}
       }),
-      // new Webpack.optimize.UglifyJsPlugin({
-      //   beautify: false,
-      //   compress: true,
-      //   comments: false
-      // }),
+      new Webpack.optimize.UglifyJsPlugin({
+        beautify: false,
+        compress: true,
+        comments: false
+      }),
       new Webpack.NoEmitOnErrorsPlugin(),
       new Webpack.HashedModuleIdsPlugin(),
       new ChunkManifestPlugin({

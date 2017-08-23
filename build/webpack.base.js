@@ -30,16 +30,10 @@ const config = {
     chunkFilename: "js/[name].[chunkhash:8].js",
     publicPath: "/"
   },
-  resolve: {
-    modules: [Path.resolve(__dirname, '../node_modules')],
-    alias: {
-      'vue$': 'vue/dist/vue.esm.js',
-      'moment': 'moment/min/moment.min.js'
-    },
-    extensions: ['.js', '.vue']
-  },
   module: {
-    noParse: /node_modules\/(jquey|moment|chart\.js)/,
+    noParse: function(content) {
+      return /jquery|lodash|moment/.test(content);
+    },
     rules: [
       {
         test: /\.vue$/,
@@ -71,6 +65,14 @@ const config = {
         use: ['url-loader?limit=30000&name=[name].[ext]&outputPath=assets/fonts/']
       }
     ]
+  },
+  resolve: {
+    modules: ['node_modules', resolve('src')],
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js',
+      'moment': "moment/min/moment-with-locales.min.js"
+    },
+    extensions: ['.js', '.vue']
   },
   plugins: [
     new Webpack.optimize.CommonsChunkPlugin({

@@ -14,15 +14,15 @@ const selectStatus = (state, type) => {
     case -1:
       return isColor ? 'red' : '已撤销'
     case 0:
-      return isColor ? '#666666' : '未成交'
+      return isColor ? 'yellow' : '未成交'
     case 1:
       return isColor ? 'blue' : '部分成交'
     case 2:
-      return isColor ? 'green' : '完全成交'
+      return isColor ? 'green' : '已成交'
     case 4:
       return isColor ? 'yellow' : '撤单处理中'
     default:
-      return '确认中'
+      return isColor ? 'blue' : '确认中'
   }
 }
 

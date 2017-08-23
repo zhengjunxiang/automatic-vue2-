@@ -14,7 +14,7 @@
       <Col :md="12">
         <sell-and-buy :symbol="symbol"></sell-and-buy>
       </Col>
-      <Col :md="12">
+      <Col :md="12" style="overflow: hidden">
         <asks-and-dids :symbol="symbol" ref="asksAndDids"></asks-and-dids>
       </Col>
     </div>
