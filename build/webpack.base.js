@@ -22,11 +22,11 @@ function resolve (dir) {
 
 const config = {
   entry: {
-    main: Path.resolve(__dirname, '../src/app.js')
+    main: resolve('src/app.js')
   },
   output: {
     filename: 'js/[name].[chunkhash:8].js',
-    path: Path.resolve(__dirname, '../dist'),
+    path: resolve('dist'),
     chunkFilename: "js/[name].[chunkhash:8].js",
     publicPath: "/"
   },
@@ -82,13 +82,7 @@ const config = {
         return ( (module.context && module.context.indexOf('iview') !== -1) || (module.context && module.context.indexOf('node_modules') !== -1) ) ;
       }
     }),
-    //CommonChunksPlugin will now extract all the common modules from vendor and main bundles
-    new Webpack.optimize.CommonsChunkPlugin({
-      // 由于它们之间没有更常见的模块，我们最终只会包含在清单文件中的运行时代码
-      name: 'manifest',
-      filename: 'manifest.js'
-    }),
-    new HtmlWebpackPlugin({title: '用户下单系统', filename: 'index.html', template: 'src/index.html'}),
+    new HtmlWebpackPlugin({title: '自动下单系统', filename: 'index.html', template: 'src/index.html'}),
     ExtractLess,
     new Webpack.optimize.ModuleConcatenationPlugin(),
     new HappyPack({

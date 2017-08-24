@@ -8,6 +8,7 @@
     "stage-3"
   ],
   "plugins": [
-    "transform-runtime"
+    "transform-runtime",
+    "syntax-dynamic-import"
   ]
 }

@@ -1,17 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-// const Home = resolve => require(['../pages/Home'], resolve)
-// const Order = resolve => require(['../pages/Order/'], resolve)
-// const Configuration = resolve => require(['../pages/Configuration'], resolve)
-// const User = resolve => require(['../pages/User'], resolve)
-// const NotFoundComponent = resolve => require(['../pages/NotFoundComponent'], resolve)
-
-import Home from '../pages/Home/'
-import Order from '../pages/Order/'
-import Configuration from '../pages/Configuration/'
-import User from '../pages/User/'
-import NotFoundComponent from '../pages/NotFoundComponent'
+const Home = () => import('../pages/Home')
+const Order = () => import('../pages/Order/')
+const Configuration = () => import('../pages/Configuration')
+const User = () => import('../pages/User')
+const NotFoundComponent = () => import('../pages/NotFoundComponent')
 
 Vue.use(Router)
 

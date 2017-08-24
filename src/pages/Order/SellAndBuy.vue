@@ -155,12 +155,11 @@ export default {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         }
-      })
-        .then(res => {
-          this.$Message.success(`${res && res.statusText || ''}, 表单提交成功`);
-        }, error => {
-          this.$Message.error(`${error && error.statusText || ''}, 表单提交失败`);
-        })
+      }).then(res => {
+        this.$Message.success(`${res && res.statusText || ''}, 表单提交成功`);
+      }, error => {
+        this.$Message.error(`${error && error.statusText || ''}, 表单提交失败`);
+      });
     },
     onDealFormAndUrl (refName, originData) {
       let formData = {};

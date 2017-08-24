@@ -23,10 +23,7 @@ const config = function(env) {
       filename: '[name].js',
     },
     plugins: [
-      new Webpack.NamedModulesPlugin(),
       new Webpack.HotModuleReplacementPlugin(),
-      // 开启全局的模块热替换(HMR)
-      new Webpack.HashedModuleIdsPlugin(),
       new Webpack.DefinePlugin({
         'process.env': {'NODE_ENV': JSON.stringify('development')}
       }),

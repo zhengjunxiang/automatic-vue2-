@@ -20,7 +20,7 @@ export default {
       .then(response => {
         this.userSunInfoArr = response.data;
       }, error => {
-        console.table(error);
+        this.$Message.error(`${error && error.statusText || ''}, 表单userinfo提交失败`);
       })
   },
   data () {

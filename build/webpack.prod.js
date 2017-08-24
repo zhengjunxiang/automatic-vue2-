@@ -2,8 +2,8 @@
 const Path = require('path');
 const Webpack = require('webpack');
 const Merge = require('webpack-merge');
-const WebpackChunkHash = require("webpack-chunk-hash");
-const ChunkManifestPlugin = require("chunk-manifest-webpack-plugin");
+// const WebpackChunkHash = require("webpack-chunk-hash");
+// const ChunkManifestPlugin = require("chunk-manifest-webpack-plugin");
 const CommonConfig = require('./webpack.base.js');
 
 const config = function(env) {
@@ -26,13 +26,20 @@ const config = function(env) {
         comments: false
       }),
       new Webpack.NoEmitOnErrorsPlugin(),
+      // 生成稳定的模块ID，稳定chunkhash
       new Webpack.HashedModuleIdsPlugin(),
-      new ChunkManifestPlugin({
-        filename: 'chunk-manifest.json',
-        manifestVariable: 'webpackManifest',
-        inlineManifest: true
+      // new WebpackChunkHash(),
+      //CommonChunksPlugin will now extract all the common modules from vendor and main bundles
+      new Webpack.optimize.CommonsChunkPlugin({
+        // 由于它们之间没有更常见的模块，我们最终只会包含在清单文件中的运行时代码
+        name: 'manifest',
+        filename: 'manifest.js'
       }),
-      new WebpackChunkHash()
+      // new ChunkManifestPlugin({
+      //   filename: 'chunk-manifest.json',
+      //   manifestVariable: 'webpackManifest',
+      //   inlineManifest: true
+      // })
     ]
   })
 }

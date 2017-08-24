@@ -28,7 +28,7 @@ import Notice from 'iview/src/components/notice';
 import Page from 'iview/src/components/page';
 // import Poptip from 'iview/src/components/poptip';
 // import Progress from 'iview/src/components/progress';
-// import Radio from 'iview/src/components/radio';
+import Radio from 'iview/src/components/radio';
 // import Rate from 'iview/src/components/rate';
 // import Slider from 'iview/src/components/slider';
 import Spin from 'iview/src/components/spin';
@@ -95,8 +95,8 @@ const iview = {
     // Poptip,
     // Progress,
     // iProgress: Progress,
-    // Radio,
-    // RadioGroup: Radio.Group,
+    Radio,
+    RadioGroup: Radio.Group,
     // Rate,
     Row,
     Select,
