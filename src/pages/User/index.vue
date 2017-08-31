@@ -1,7 +1,7 @@
 <template>
   <Tabs value="sum" class="user-page">
     <Tab-pane label="余额信息" name="sum">
-      <platform-plane v-for="(item, index) in userSunInfoArr" :key="index" :title="item && item.platform" :infoData="item && item.info"></platform-plane>
+      <balance :userSunInfo="userSunInfo"></balance>
     </Tab-pane>
     <Tab-pane label="账户信息" name="account">
       <h2>账户信息</h2>
@@ -9,24 +9,34 @@
   </Tabs>
 </template>
 <script>
-import PlatformPlane from './PlatformPlane';
+import Balance from './Balance';
+import config from '../../config';
 export default {
   name: 'User',
   components: {
-    PlatformPlane
-  },
-  created () {
-    this.$http.get('http://192.168.170.104:8080/userinfo')
-      .then(response => {
-        this.userSunInfoArr = response.data;
-      }, error => {
-        this.$Message.error(`${error && error.statusText || ''}, 表单userinfo提交失败`);
-      })
+    Balance
   },
   data () {
     return {
-      userSunInfoArr: [],
+      userSunInfo: {},
     }
+  },
+  methods: {
+    fetchUserinfo() {
+      this.$http.get(`${config.apiHost}/userinfo`)
+        .then(response => {
+          this.userSunInfo = response.data;
+          this.$Message.success('userinfo获取成功');
+        }, error => {
+          this.$Message.error('userinfo获取失败');
+        })
+    }
+  },
+  created () {
+    this.fetchUserinfo();
+  },
+  activated() {
+    this.fetchUserinfo();
   }
 }
 </script>

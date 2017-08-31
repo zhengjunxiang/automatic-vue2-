@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-const Home = () => import('../pages/Home')
+const Home = () => import('../pages/Home/')
 const Order = () => import('../pages/Order/')
-const Configuration = () => import('../pages/Configuration')
-const User = () => import('../pages/User')
+const Configuration = () => import('../pages/Configuration/')
+const User = () => import('../pages/User/')
 const NotFoundComponent = () => import('../pages/NotFoundComponent')
 
 Vue.use(Router)
@@ -30,7 +30,7 @@ export default new Router({
       component: User
     }, {
       path: '*',
-      component: NotFoundComponent
+      redirect: {name:'Home'}
     }
   ]
 })

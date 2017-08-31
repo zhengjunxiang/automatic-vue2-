@@ -5,15 +5,9 @@
         <Form-item label="委托类型：">
           <Row>
             <Col span="18">
-              <Dropdown class="block-dropdown" trigger="click" placement="bottom-start" @on-click="handleDropdownSellClick">
-                <Button type="ghost">
-                  {{sellTypeValue || ''}}
-                  <Icon type="arrow-down-b"></Icon>
-                </Button>
-                <Dropdown-menu slot="list">
-                  <Dropdown-item v-for="item in tradeTypeArr" :key="item.id" :name="item.id">{{item.name}}</Dropdown-item>
-                </Dropdown-menu>
-              </Dropdown>
+              <Select v-model="sellTradeType" @on-change="handleSelectSellClick">
+                <Option v-for="item in tradeTypeArr" :value="item.id" :key="item.id">{{item.name}}</Option>
+              </Select>
             </Col>
           </Row>
         </Form-item>
@@ -42,15 +36,9 @@
         <Form-item label="委托类型：">
           <Row>
             <Col span="18">
-              <Dropdown class="block-dropdown" trigger="click" placement="bottom-start" @on-click="handleDropdownBuyClick">
-                <Button type="ghost">
-                  {{buyTypeValue || ''}}
-                  <Icon type="arrow-down-b"></Icon>
-                </Button>
-                <Dropdown-menu slot="list">
-                  <Dropdown-item v-for="item in tradeTypeArr" :key="item.id" :name="item.id">{{item.name}}</Dropdown-item>
-                </Dropdown-menu>
-              </Dropdown>
+              <Select v-model="buyTradeType" @on-change="handleSelectBuyClick">
+                <Option v-for="item in tradeTypeArr" :value="item.id" :key="item.id">{{item.name}}</Option>
+              </Select>
             </Col>
           </Row>
         </Form-item>
@@ -67,7 +55,7 @@
             <Spin></Spin>
           </div>
           <Row v-else-if="FetchTradeType === 'ok'">
-            <Col span="18"><Button type="error" @click="handleSubmit" long>卖出</Button></Col>
+            <Col span="18"><Button type="success" @click="handleSubmit" long>买入</Button></Col>
           </Row>
           <p v-else-if="FetchTradeType === 'error'">TradeType类型获取失败, 请等待工程师修复。</p>
         </Form-item>
@@ -80,6 +68,7 @@ import SellBingShan from './forms/SellBingShan';
 import SellTimes from './forms/SellTimes';
 import BuyBingShan from './forms/BuyBingShan';
 import BuyTimes from './forms/BuyTimes';
+import config from '../../config';
 export default {
   name: "sellAndBuy",
   props: ['symbol'],
@@ -108,11 +97,11 @@ export default {
     this.fetchTradetype();
   },
   methods: {
-    handleDropdownSellClick (id) {
+    handleSelectSellClick (id) {
       this.sellTypeValue = this.tradeTypeObj[id];
       this.sellTradeType = id;
     },
-    handleDropdownBuyClick (id) {
+    handleSelectBuyClick (id) {
       this.buyTypeValue = this.tradeTypeObj[id];
       this.buyTradeType = id;
     },
@@ -150,15 +139,24 @@ export default {
       }
       this.$http({
         method:'post',
-        url: `http://192.168.170.104:8080/${url}`,
+        url: `${config.apiHost}/${url}`,
         data: formData,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         }
       }).then(res => {
-        this.$Message.success(`${res && res.statusText || ''}, 表单提交成功`);
+        if (this.sellTypeValue === '冰山委托' && tabType === 'sell') {
+          this.$refs['SellBingShan'].reset();
+        } else if (this.sellTypeValue === '时间加权委托' && tabType === 'sell') {
+          this.$refs['SellTimes'].reset();
+        } else if (this.sellTypeValue === '冰山委托' && tabType === 'buy') {
+          this.$refs['BuyBingShan'].reset();
+        } else if (this.sellTypeValue === '时间加权委托' && tabType === 'buy') {
+          this.$refs['BuyTimes'].reset();
+        }
+        this.$Message.success('表单提交成功');
       }, error => {
-        this.$Message.error(`${error && error.statusText || ''}, 表单提交失败`);
+        this.$Message.error('表单提交失败');
       });
     },
     onDealFormAndUrl (refName, originData) {
@@ -173,8 +171,7 @@ export default {
       return formData;
     },
     fetchTradetype () {
-      this.$http.get('http://192.168.170.104:8080/tradetype')
-      // this.$http.get('http://localhost:3001/tradetype')
+      this.$http.get(`${config.apiHost}/tradetype`)
         .then(response => {
           if (response.data &&  response.data.data.length > 0) {
             this.tradeTypeArr = response.data.data;
@@ -184,7 +181,7 @@ export default {
           }
           this.FetchTradeType = 'ok';
         }, error => {
-          this.$Message.error(`${error && error.statusText || 'TradeType类型获取失败'}, `);
+          this.$Message.error('TradeType类型获取失败');
           this.FetchTradeType = 'error';
         });
     }

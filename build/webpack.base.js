@@ -70,7 +70,8 @@ const config = {
     modules: ['node_modules', resolve('src')],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      'moment': "moment/min/moment-with-locales.min.js"
+      'moment': 'moment/min/moment-with-locales.min.js',
+      // '~': resolve('src/pages')
     },
     extensions: ['.js', '.vue']
   },

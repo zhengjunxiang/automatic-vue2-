@@ -55,6 +55,7 @@ export default {
       const middleBoxDom = document.getElementById('middleBox');
       const logInformationBoxDom = document.getElementById('logInformationBox');
       const orderPageBoxDom = document.getElementById('orderPageBox');
+      if (!middleBoxDom) return;
       middleBoxDom.style.height = orderPageBoxDom.offsetHeight - dealsChangeBoxDom.offsetHeight - logInformationBoxDom.offsetHeight + 'px';
     }
   },
@@ -67,7 +68,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" >
 @import '../../style/variable/index.less';
 @import './index.less';
 </style>

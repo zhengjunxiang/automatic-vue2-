@@ -10,7 +10,7 @@
 <script>
 export default {
   name: "Switcher",
-  props: ['changeSidebarState', 'switcherStateClose'],
+  props: ['switcherStateClose'],
   methods: {
     handleClick: function () {
       this.$emit('changeSidebarState')

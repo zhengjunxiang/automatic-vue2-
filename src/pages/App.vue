@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     changeAppState() {
-      this.appStateClose = !this.appStateClose
+      this.appStateClose = !this.appStateClose;
     }
   },
   data () {

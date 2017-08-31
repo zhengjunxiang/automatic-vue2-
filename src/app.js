@@ -4,10 +4,10 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import Iview from './components/iview'
 // import Iview from 'iview'
-import App from './pages/App.vue'
 import router from './router'
+import App from './pages/App.vue'
 import store from './store/store'
-import {utils} from './utils/utils'
+import { utils } from './utils/utils'
 
 import './style/iview/index.less'
 
@@ -20,7 +20,7 @@ router.beforeEach((to, from, next) => {
   next()
 })
 
-router.afterEach((to, from, next) => {
+router.afterEach(() => {
   Iview.LoadingBar.finish()
   window.scrollTo(0, 0)
 })

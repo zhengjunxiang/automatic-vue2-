@@ -73,11 +73,22 @@ export default {
     returnFormData (cd) {
       const formValidate = this.formValidate;
       this.$refs['formValidate'].validate((valid) => {
+        cd(formValidate);
         if (formValidate) {
         } else {
           cd(null);
         }
       })
+    },
+    reset() {
+      this.formValidate = {
+        amount: '',
+        orderDepth: '',
+        tradeRatio: '',
+        borderAmount: '',
+        borderPrice: '',
+        tradeInterval: ''
+      }
     }
   }
 }

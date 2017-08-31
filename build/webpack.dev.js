@@ -9,16 +9,11 @@ const PORT = 9000;
 const config = function(env) {
   return Merge(CommonConfig, {
     entry: [
-      // 开启 React 代码的模块热替换(HMR)
       'webpack-dev-server/client?http://192.168.170.140:' + PORT,
-      // 为 webpack-dev-server 的环境打包代码
-      // 然后连接到指定服务器域名与端口
       'webpack/hot/only-dev-server',
-      // 为热替换(HMR)打包好代码
-      // only- 意味着只有成功更新运行代码才会执行热替换(HMR)
       Path.resolve(__dirname, '../src/app.js')
     ],
-    devtool: 'inline-source-map',
+    devtool: '#eval-source-map',
     output: {
       filename: '[name].js',
     },

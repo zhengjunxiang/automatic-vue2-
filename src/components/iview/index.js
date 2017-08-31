@@ -15,7 +15,7 @@ import Button from 'iview/src/components/button';
 // import Circle from 'iview/src/components/circle';
 // import Collapse from 'iview/src/components/collapse';
 // import DatePicker from 'iview/src/components/date-picker';
-import Dropdown from 'iview/src/components/dropdown';
+// import Dropdown from 'iview/src/components/dropdown';
 import Form from 'iview/src/components/form';
 import Icon from 'iview/src/components/icon';
 import Input from 'iview/src/components/input';
@@ -65,9 +65,9 @@ const iview = {
     // CheckboxGroup: Checkbox.Group,
     // iCircle: Circle,
     // DatePicker,
-    Dropdown,
-    DropdownItem: Dropdown.Item,
-    DropdownMenu: Dropdown.Menu,
+    // Dropdown,
+    // DropdownItem: Dropdown.Item,
+    // DropdownMenu: Dropdown.Menu,
     Form,
     iForm: Form,
     FormItem: Form.Item,

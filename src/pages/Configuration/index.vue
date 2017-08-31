@@ -1,10 +1,10 @@
 <template>
-  <Tabs value="api" class="configuration">
+  <Tabs value="api" class="configuration" @on-click="handleTabClick">
     <Tab-pane label="API信息" name="api">
-      <api-info></api-info>
+      <api-info ref="api"></api-info>
     </Tab-pane>
     <Tab-pane label="交易所信息" name="platform">
-      <platform-info></platform-info>
+      <platform-info ref="platform"></platform-info>
     </Tab-pane>
   </Tabs>
 </template>
@@ -18,9 +18,18 @@ export default {
     PlatformInfo
   },
   data () {
-    return {}
+    return {
+      currentTab: 'api'
+    }
   },
-  methods: {}
+  methods: {
+    handleTabClick(tab) {
+      if (this.currentTab !== tab) {
+        this.currentTab = tab;
+        this.$refs[tab].fetchData();
+      }
+    }
+  }
 }
 </script>
 <style lang="less">

@@ -79,6 +79,16 @@ export default {
           cd(null);
         }
       })
+    },
+    reset() {
+      this.formValidate = {
+        amount: '',
+        orderDepth: '',
+        tradeRatio: '',
+        borderAmount: '',
+        borderPrice: '',
+        tradeInterval: ''
+      }
     }
   }
 }

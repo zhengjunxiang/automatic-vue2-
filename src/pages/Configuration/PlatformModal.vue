@@ -24,9 +24,10 @@
   </Modal>
 </template>
 <script>
+import config from '../../config';
 export default {
   name: "PlatformModal",
-  props: ["modalOpt", "fetchApiInfoList"],
+  props: ["modalOpt", "fetchPlatformInfoList"],
   data () {
     return {
       isShow: false,
@@ -55,26 +56,26 @@ export default {
         if (valid) {
           this.$http({
             method:'post',
-            url: `http://192.168.170.104:8080/saveApiInfo`,
+            url: `${config.apiHost}/savePlatform`,
             data: this.formValidate,
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
             }
           }).then(res => {
             if (res.data.status) {
-              this.$Message.success('表单saveApiInfo编辑成功');
+              this.$Message.success('表单savePlatform编辑成功');
               this.hiddenApiModal();
-              this.fetchApiInfoList();
+              this.fetchPlatformInfoList();
             } else {
-              this.$Message.error({content: `${res.data.message}，表单saveApiInfo编辑失败`, duration: 5});
+              this.$Message.error({content: `${res.data.message}，表单savePlatform编辑失败`, duration: 5});
               this.handleHiddenLoading();
             }
           }, error => {
-            this.$Message.error({content: `${error.message}, 表单saveApiInfo提交失败`, duration: 5});
+            this.$Message.error({content: `${error.message}, 表单savePlatform提交失败`, duration: 5});
             this.handleHiddenLoading();
           });
         } else {
-          this.$Message.error({content: 'saveApiInfo表单验证失败!', duration: 5});
+          this.$Message.error({content: 'savePlatform表单验证失败!', duration: 5});
           this.handleHiddenLoading();
         }
       })
@@ -97,10 +98,8 @@ export default {
       this.formValidate = {id: '', name: '', url: '', disableFlag: '0'}
     },
     handleSetTitle() {
-      return this.modalOpt === 'add' ? '添加Api信息' : '编辑Api信息';
+      return this.modalOpt === 'add' ? '添加交易所信息' : '编辑交易所信息';
     }
   }
 }
 </script>
-<style lang="less" scoped>
-</style>

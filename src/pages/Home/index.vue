@@ -19,7 +19,7 @@
   </Row>
 </template>
 <script>
-import {selectStatus, formatDate} from '../../utils/utils'
+import {selectStatus, formatDate} from '../../utils/utils';
 export default {
   name: 'Home',
   created () {

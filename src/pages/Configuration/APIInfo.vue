@@ -18,7 +18,8 @@
   </Row>
 </template>
 <script>
-import ApiModal from './ApiModal'
+import ApiModal from './ApiModal';
+import config from '../../config';
 export default {
   name: "ApiInfo",
   components: {
@@ -83,11 +84,10 @@ export default {
                 },
                 on: {
                   click: () => {
-                    const id = params.row.id;
                     this.$Modal.confirm({
                       content: `<h3>确认删除<span style="color: red">${params.row.name}</span>吗？</h3>`,
                       onOk: () => {
-                        this.fetchDelApiInfo(id);
+                        this.fetchDelApiInfo(params.row.id);
                       }
                     })
                   }
@@ -108,39 +108,39 @@ export default {
       this.$refs.apiModal.showApiModal();
     },
     fetchApiInfoList() {
-      this.$http.get('http://192.168.170.104:8080/apiInfoList').
+      this.$http.get(`${config.apiHost}/apiInfoList`).
         then(response => {
           if (response.data && response.data.data.length > 0) {
             this.apiInfoListData = [].concat(response.data.data);
-            this.$Message.success(`${response && response.statusText || ''}, 请求apiInfoList数据成功`);
+            this.$Message.success('请求apiInfoList数据成功');
           }
         }, error => {
-          this.$Message.error(`${error && error.statusText || ''}, 请求apiInfoList数据失败`);
+          this.$Message.error('请求apiInfoList数据失败');
         });
     },
     fetchPlatformList() {
-      this.$http.get('http://192.168.170.104:8080/platformList?type=select').
+      this.$http.get(`${config.apiHost}/platformList?type=select`).
         then(response => {
           if (response.data && response.data.data.length > 0) {
             this.platforsmData = [].concat(response.data.data);
           }
         }, error => {
-          this.$Message.error(`${error && error.statusText || ''}, 请求platformList数据失败`);
+          this.$Message.error('请求platformList数据失败');
         });
     },
     fetchGetApiInfo(id) {
-      this.$http.get(`http://192.168.170.104:8080/getApiInfo?id=${id}`).
+      this.$http.get(`${config.apiHost}/getApiInfo?id=${id}`).
         then(response => {
           if (response.data && Object.keys(response.data).length > 0) {
             const apiInfoData = {...response.data};
             this.handleSetEditFormValidate(apiInfoData);
           }
         }, error => {
-          this.$Message.error(`${error && error.statusText || ''}, 请求getApiInfo数据失败`);
+          this.$Message.error('请求getApiInfo数据失败');
         });
     },
     fetchDelApiInfo(id) {
-      this.$http.get(`http://192.168.170.104:8080/delApiInfo?id=${id}`).
+      this.$http.get(`${config.apiHost}/delApiInfo?id=${id}`).
         then(response => {
           this.$Message.success(`请求delApiInfo数据成功`);
           this.fetchApiInfoList();
@@ -158,13 +158,14 @@ export default {
         priority: data.priority || '2',
         disableFlag: data.disableFlag || '0'
       }
+    },
+    fetchData() {
+      this.fetchApiInfoList();
+      this.fetchPlatformList();
     }
   },
   created() {
-    this.fetchApiInfoList();
-    this.fetchPlatformList();
+    this.fetchData();
   }
 }
 </script>
-<style lang="less">
-</style>

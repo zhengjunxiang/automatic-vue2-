@@ -2,6 +2,7 @@
   <Table class="asksAndDids-table" :row-class-name="rowClassName" :columns="columnsAsksAndBids" :data="totalData"></Table>
 </template>
 <script>
+import config from '../../config'
 export default {
   name: "asksAndDids",
   timer: null,
@@ -39,8 +40,7 @@ export default {
   },
   methods: {
     fetchAsksAndDidsData () {
-      this.$http.get(`http://192.168.170.104:8080/depth?symbol=${this.symbol}`)
-      // this.$http.get('http://localhost:3001/depth')
+      this.$http.get(`${config.apiHost}/depth?symbol=${this.symbol}`)
       .then(response => {
         const data = response.data;
         if (data) {
@@ -60,7 +60,7 @@ export default {
           this.totalData = this.asksData.concat(this.bidsData);
         }
       }, (error) => {
-        this.$Message.error(`${error && error.statusText || ''}, 请求数据失败`);
+        this.$Message.error('请求depth数据失败');
       })
     },
     rowClassName (row, index) {

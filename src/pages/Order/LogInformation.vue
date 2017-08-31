@@ -23,7 +23,8 @@
   </div>
 </template>
 <script>
-import {selectStatus, formatDate} from '../../utils/utils'
+import {selectStatus, formatDate} from '../../utils/utils';
+import config from '../../config';
 export default {
   name: "LogInformation",
   timer: null,
@@ -215,6 +216,16 @@ export default {
             },
             style: {
               marginRight: '8px'
+            },
+            on: {
+              click: () => {
+                this.$Modal.confirm({
+                  content: `<h3>确认删除吗？</h3>`,
+                  onOk: () => {
+                    this.fetchCancel(row)
+                  }
+                })
+              }
             }
           }, '撤销'))
         }
@@ -264,7 +275,7 @@ export default {
       return dates;
     },
     fetchDealsTradeList(cd) {
-      this.$http.get(`http://192.168.170.104:8080/tradeList?symbol=${this.symbol}&isFinish=0&type=${this.dealsType}`)
+      this.$http.get(`${config.apiHost}/tradeList?symbol=${this.symbol}&isFinish=0&type=${this.dealsType}`)
         .then(response => {
           const data = Array.prototype.slice.call(response.data.orders, 0);
           data.length > 5 ? this.isOverFives = true : this.isOverFives = false;
@@ -285,12 +296,12 @@ export default {
             cd();
           });
         }, error => {
-          this.$Message.error(`${error && error.statusText || 'TradeList类型获取失败'}, `);
+          this.$Message.error('TradeList类型获取失败');
           this.dataDeals = [];
         })
     },
     fetchHistoryTradeList(cd) {
-      this.$http.get(`http://192.168.170.104:8080/tradeList?symbol=${this.symbol}&isFinish=1&type=${this.historyType}`)
+      this.$http.get(`${config.apiHost}/tradeList?symbol=${this.symbol}&isFinish=1&type=${this.historyType}`)
         .then(response => {
           const data = Array.prototype.slice.call(response.data.orders, 0);
           data.length > 5 ? this.isOverFives = true : this.isOverFives = false;
@@ -311,8 +322,27 @@ export default {
             cd();
           });
         }, error => {
-          this.$Message.error(`${error && error.statusText || 'TradeList类型获取失败'}, `);
+          this.$Message.error('TradeList类型获取失败');
           this.historyDeals = [];
+        })
+    },
+    fetchCancel(row) {
+      let opt = '';
+      if (this.dealsType === 'normalOrders') {
+        opt = `type=normalOrders&platform=${row.platform}&symbol=${row.symbol}&orderId=${row.order_id}`;
+      } else {
+        opt = `type=trade&id=${row.id}`;
+      }
+      this.$http.get(`${config.apiHost}/cancel?${opt}`)
+        .then(response => {
+          if (this.currentTab === 'deal') {
+            this.fetchDealsTradeList(this.setMiddleBoxDomH);
+          } else if (this.currentTab === 'history') {
+            this.fetchHistoryTradeList(this.setMiddleBoxDomH);
+          }
+          this.$Message.success('撤销成功');
+        }, error => {
+          this.$Message.error('撤销失败');
         })
     }
   },

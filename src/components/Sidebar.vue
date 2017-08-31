@@ -22,7 +22,7 @@ import Switcher from './Switcher.vue';
 
 export default {
   name: "Sidebar",
-  props: ["changeAppState", "sidebarStateClose"],
+  props: ["sidebarStateClose"],
   components: {
     switcher: Switcher
   },

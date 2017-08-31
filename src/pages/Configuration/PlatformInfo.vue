@@ -9,13 +9,16 @@
       </header>
       <Table :columns="columns" :data="apiInfoListData"></Table>
       <platform-modal
+        :modalOpt="currentModalOpt"
+        :fetchPlatformInfoList="fetchPlatformInfoList"
         ref="platformModal"
       ></platform-modal>
     </Col>
   </Row>
 </template>
 <script>
-import PlatformModal from './PlatformModal'
+import PlatformModal from './PlatformModal';
+import config from '../../config';
 export default {
   name: "PlatformInfo",
   components: {
@@ -57,7 +60,8 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.handleApiAddBtnClick('edit');
+                    this.fetchGetPlatformInfo(params.row.id)
+                    this.handlePlatformAddBtnClick('edit');
                   }
                 }
               }, '编辑'),
@@ -68,10 +72,10 @@ export default {
                 },
                 on: {
                   click: () => {
-                    const id = params.row.id;
                     this.$Modal.confirm({
                       content: `<h3>确认删除<span style="color: red">${params.row.name}</span>吗？</h3>`,
                       onOk: () => {
+                        this.fetchDelPlatformInfo(params.row.id);
                       }
                     })
                   }
@@ -88,19 +92,59 @@ export default {
       opt ? this.currentModalOpt = opt : null;
       this.$refs.platformModal.showApiModal();
     },
-    fetchApiInfoList() {
-      this.$http.get('http://192.168.170.104:8080/platformList?type=show').
+    fetchPlatformList() {
+      this.$http.get(`${config.apiHost}/platformList?type=select`).
+        then(response => {
+          if (response.data && response.data.data.length > 0) {
+            this.platforsmData = [].concat(response.data.data);
+          }
+        }, error => {
+          this.$Message.error('请求platformList数据失败');
+        });
+    },
+    fetchPlatformInfoList() {
+      this.$http.get(`${config.apiHost}/platformList?type=show`).
         then(response => {
           if (response.data && response.data.data.length > 0) {
             this.apiInfoListData = [].concat(response.data.data);
-            this.$Message.success(`${response && response.statusText || ''}, 请求apiInfoList数据成功`);
+            this.$Message.success('请求platformInfoList数据成功');
           }
         }, error => {
-          this.$Message.error(`${error && error.statusText || ''}, 请求apiInfoList数据失败`);
+          this.$Message.error('请求platformInfoList数据失败');
         });
     },
+    fetchGetPlatformInfo(id) {
+      this.$http.get(`${config.apiHost}/getPlatform?id=${id}`).
+        then(response => {
+          if (response.data && Object.keys(response.data).length > 0) {
+            const apiInfoData = {...response.data.data};
+            this.handleSetEditFormValidate(apiInfoData[0]);
+          }
+        }, error => {
+          this.$Message.error('请求getApiInfo数据失败');
+        });
+    },
+    fetchDelPlatformInfo(id) {
+      this.$http.get(`${config.apiHost}/delPlatform?id=${id}`).
+        then(response => {
+          this.$Message.success(`请求delPlatform数据成功`);
+          this.fetchPlatformInfoList();
+        }, error => {
+          this.$Message.error(`请求delPlatform数据失败`);
+        });
+    },
+    handleSetEditFormValidate(data) {
+      this.$refs.platformModal.formValidate = {
+        id: data.id || '',
+        name: data.name || '',
+        url: data.url || '',
+        disableFlag: data.disableFlag || '0'
+      }
+    },
+    fetchData() {
+      this.fetchPlatformInfoList();
+      this.fetchPlatformList();
+    }
   }
 }
 </script>
-<style lang="less">
-</style>

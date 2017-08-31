@@ -39,6 +39,7 @@
   </Modal>
 </template>
 <script>
+import config from '../../config';
 export default {
   name: "ApiModal",
   props: ["modalOpt", "platforsmData", "fetchApiInfoList"],
@@ -78,7 +79,7 @@ export default {
         if (valid) {
           this.$http({
             method:'post',
-            url: `http://192.168.170.104:8080/saveApiInfo`,
+            url: `${config.apiHost}/saveApiInfo`,
             data: this.formValidate,
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
@@ -125,5 +126,3 @@ export default {
   }
 }
 </script>
-<style lang="less" scoped>
-</style>
