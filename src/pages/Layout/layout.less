@@ -1,0 +1,41 @@
+.contantor {
+  position: absolute;
+  top: 60px;
+  bottom: 0px;
+  width: 100%;
+  padding-left: 200px;
+  transition: all 0.3s ease;
+  .views {
+    float: left;
+    height: 100%;
+    width: 100%;
+    padding: 15px 25px;
+    overflow: auto;
+    min-width: 600px;
+    .fade-enter-active, .fade-leave-active {
+      transition: all 0.3s ease
+    }
+    .fade-enter, .fade-leave-active {
+      opacity: 0
+    }
+  }
+  .sidebar {
+    background: @dark-light;
+    height: 100%;
+    width: 200px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    position: absolute;
+    left: 0px;
+  }
+  .state-close {
+    width: 55px;
+  }
+}
+.app-state-close {
+  padding-left: 55px;
+}
+.ivu-page {
+  margin-top: 20px;
+  text-align: center;
+}

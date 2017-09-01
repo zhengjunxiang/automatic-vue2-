@@ -1,4 +1,23 @@
 <template>
+  <div class="app-container">
+    <router-view></router-view>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'App'
+}
+</script>
+<style lang="less">
+html, body {
+  height: 100%;
+}
+.app-container {
+  height: 100%;
+}
+</style>
+<!-- <template>
   <div id="app">
     <header-nav></header-nav>
     <Row :class="{contantor: true, 'app-state-close': this.appStateClose}">
@@ -7,9 +26,7 @@
       </Col>
       <Col class="views">
         <transition name="fade" mode="out-in" appear>
-          <keep-alive>
-            <router-view></router-view>
-          </keep-alive>
+          <router-view></router-view>
         </transition>
       </Col>
     </Row>
@@ -42,4 +59,4 @@ export default {
 <style lang="less">
 @import '../style/variable/index.less';
 @import './app.less';
-</style>
+</style> -->
