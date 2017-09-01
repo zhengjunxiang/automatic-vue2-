@@ -19,7 +19,7 @@
 </template>
 <script>
 import ApiModal from './ApiModal';
-import config from '../../config';
+import config from '@/config';
 export default {
   name: "ApiInfo",
   components: {

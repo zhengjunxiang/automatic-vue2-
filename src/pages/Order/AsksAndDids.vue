@@ -2,7 +2,7 @@
   <Table class="asksAndDids-table" :row-class-name="rowClassName" :columns="columnsAsksAndBids" :data="totalData"></Table>
 </template>
 <script>
-import config from '../../config'
+import config from '@/config'
 export default {
   name: "asksAndDids",
   timer: null,

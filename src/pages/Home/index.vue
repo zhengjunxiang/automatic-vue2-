@@ -19,7 +19,7 @@
   </Row>
 </template>
 <script>
-import {selectStatus, formatDate} from '../../utils/utils';
+import {selectStatus, formatDate} from '@/utils/utils';
 export default {
   name: 'Home',
   created () {
@@ -32,9 +32,9 @@ export default {
       this.$store.dispatch(`home/fetchHistory${type}`).then((response) => {
         this.dealHomeData(type)
         this[`handlePageChang${type}`]()
-        this.$Message.success(`${response && response.statusText || ''}, 请求history${type}数据成功`);
+        this.$Message.success(`请求history${type}数据成功`);
       }, (error) => {
-        this.$Message.error(`${error && error.statusText || ''}, 请求history${type}数据成功`);
+        this.$Message.error(`请求history${type}数据成功`);
       });
     },
     dealHomeData(type) {

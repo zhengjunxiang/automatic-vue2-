@@ -10,7 +10,7 @@
 </template>
 <script>
 import Balance from './Balance';
-import config from '../../config';
+import config from '@/config';
 export default {
   name: 'User',
   components: {

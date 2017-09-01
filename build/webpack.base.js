@@ -1,16 +1,13 @@
 /*eslint-disable*/
-const os = require('os');
 const Path = require('path');
 const Webpack = require('webpack');
-const HappyPack = require('happypack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const vueLoaderConfig = require('./vue-loader.conf');
 
-const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 // 根据NODE_ENV来启用
-const ExtractLess = new ExtractTextPlugin({
+const Extract = new ExtractTextPlugin({
   allChunks: true,
   filename: "style/style.[name].[contenthash:8].css",
   disable: process.env.NODE_ENV === "development"
@@ -41,20 +38,22 @@ const config = {
         options: vueLoaderConfig
       }, {
         test: /\.css/,
-        use: ExtractLess.extract({
+        use: Extract.extract({
           fallback: "style-loader",
-          use: Path.resolve(__dirname, '../node_modules', 'happypack/loader') + '?id=css'
+          use: ['css-loader?importLoaders=1']
         })
       }, {
         test: /\.less$/,
-        use: ExtractLess.extract({
+        use: Extract.extract({
           fallback: "style-loader",
-          use: Path.resolve(__dirname, '../node_modules', 'happypack/loader') + '?id=less'
+          use: ['css-loader', 'less-loader']
         })
       }, {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: ['happypack/loader?id=happybabel']
+        use: {
+          loader: 'babel-loader?cacheDirectory=true'
+        }
       }, {
         test: /iview.src.*?js$/, loader: 'babel-loader'
       }, {
@@ -71,7 +70,7 @@ const config = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       'moment': 'moment/min/moment-with-locales.min.js',
-      // '~': resolve('src/pages')
+      '@': resolve('src')
     },
     extensions: ['.js', '.vue']
   },
@@ -84,27 +83,8 @@ const config = {
       }
     }),
     new HtmlWebpackPlugin({title: '自动下单系统', filename: 'index.html', template: 'src/index.html'}),
-    ExtractLess,
-    new Webpack.optimize.ModuleConcatenationPlugin(),
-    new HappyPack({
-      id: 'happybabel',
-      loaders: ['babel-loader?cacheDirectory=true'],
-      threadPool: happyThreadPool
-    }),
-    new HappyPack({
-      id: 'less',
-      loaders: [{
-          loader: "css-loader"
-      }, {
-          loader: "less-loader"
-      }],
-      threadPool: happyThreadPool
-    }),
-    new HappyPack({
-      id: 'css',
-      loaders: ['css-loader?importLoaders=1'],
-      threadPool: happyThreadPool
-    })
+    Extract,
+    new Webpack.optimize.ModuleConcatenationPlugin()
   ]
 }
 

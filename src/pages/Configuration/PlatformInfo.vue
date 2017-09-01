@@ -18,7 +18,7 @@
 </template>
 <script>
 import PlatformModal from './PlatformModal';
-import config from '../../config';
+import config from '@/config';
 export default {
   name: "PlatformInfo",
   components: {

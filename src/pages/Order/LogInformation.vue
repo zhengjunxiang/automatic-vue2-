@@ -23,8 +23,8 @@
   </div>
 </template>
 <script>
-import {selectStatus, formatDate} from '../../utils/utils';
-import config from '../../config';
+import {selectStatus, formatDate} from '@/utils/utils';
+import config from '@/config';
 export default {
   name: "LogInformation",
   timer: null,

@@ -68,7 +68,7 @@ import SellBingShan from './forms/SellBingShan';
 import SellTimes from './forms/SellTimes';
 import BuyBingShan from './forms/BuyBingShan';
 import BuyTimes from './forms/BuyTimes';
-import config from '../../config';
+import config from '@/config';
 export default {
   name: "sellAndBuy",
   props: ['symbol'],

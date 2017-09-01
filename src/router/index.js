@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+const Login = () => import('../pages/Login/')
 const Home = () => import('../pages/Home/')
 const Order = () => import('../pages/Order/')
 const Configuration = () => import('../pages/Configuration/')
@@ -13,6 +14,10 @@ export default new Router({
   mode: 'history',
   routes: [
     {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    }, {
       path: '/',
       name: 'Home',
       component: Home
@@ -30,7 +35,9 @@ export default new Router({
       component: User
     }, {
       path: '*',
-      redirect: {name:'Home'}
+      redirect: {
+        name: 'Login'
+      }
     }
   ]
 })

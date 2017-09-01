@@ -1,10 +1,8 @@
 import moment from 'moment'
 
 const utils = {
-  useElement: function (vue, ...reset) {
-    reset.map(item => {
-      vue.use(item)
-    })
+  useElement(vue, ...reset) {
+    reset.map(item => vue.use(item))
   }
 }
 
@@ -26,19 +24,17 @@ const selectStatus = (state, type) => {
   }
 }
 
-const formatDate = (date) => {
-  return moment(moment.unix(date)).format('YYYY-MM-DD HH:mm:ss')
-}
+const formatDate = date => moment(moment.unix(date)).format('YYYY-MM-DD HH:mm:ss')
 
 const reg = {
   validatefloat: /^[0-9]+([.][0-9]{1,2})?$/,
   fivePercent: /^[0-5]{1}([.][0-9]{1,2})?$/,
   depthPercent: /^[-+]?[0](([.][0-4][0-9]?)|([.][5][0]?))?$/,
-  sdScale: function (value) {
+  sdScale(value) {
     const float = Number(value)
     return float > 0.1 && float <= 100
   },
-  entrustInterval: function (value) {
+  entrustInterval(value) {
     const float = Number(value)
     return float >= 1 && float <= 600
   }
@@ -52,4 +48,4 @@ const mes = {
   entrustInterval: '请输入1-600的数字'
 }
 
-export {utils, selectStatus, formatDate, reg, mes}
+export { utils, selectStatus, formatDate, reg, mes }
