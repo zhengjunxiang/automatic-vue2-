@@ -1418,10 +1418,6 @@ core-js@^2.4.0, core-js@^2.5.0:
   version "2.5.0"
   resolved "http://registry.npm.taobao.org/core-js/download/core-js-2.5.0.tgz#569c050918be6486b3837552028ae0466b717086"
 
-core-js@^2.4.1:
-  version "2.4.1"
-  resolved "http://registry.npm.taobao.org/core-js/download/core-js-2.4.1.tgz#4de911e667b0eae9124e34254b53aea6fc618d3e"
-
 core-util-is@~1.0.0:
   version "1.0.2"
   resolved "http://registry.npm.taobao.org/core-util-is/download/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
@@ -3036,14 +3032,15 @@ isstream@~0.1.2:
   version "0.1.2"
   resolved "http://registry.npm.taobao.org/isstream/download/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
 
-iview@^2.0.0:
-  version "2.0.0"
-  resolved "http://registry.npm.taobao.org/iview/download/iview-2.0.0.tgz#80191df3e1ff31e80f4c7aedb10b96d828db0906"
+iview@^2.3.0-beta.1:
+  version "2.3.0-beta.1"
+  resolved "http://registry.npm.taobao.org/iview/download/iview-2.3.0-beta.1.tgz#254a093cdc5b83e8fe91192726b1ee02d17d9fd0"
   dependencies:
     async-validator "^1.7.1"
-    core-js "^2.4.1"
+    core-js "^2.5.0"
     deepmerge "^1.5.0"
     popper.js "^0.6.4"
+    tinycolor2 "^1.4.1"
 
 js-base64@^2.1.9:
   version "2.1.9"
@@ -5189,6 +5186,10 @@ timers-browserify@^2.0.2:
   resolved "http://registry.npm.taobao.org/timers-browserify/download/timers-browserify-2.0.2.tgz#ab4883cf597dcd50af211349a00fbca56ac86b86"
   dependencies:
     setimmediate "^1.0.4"
+
+tinycolor2@^1.4.1:
+  version "1.4.1"
+  resolved "http://registry.npm.taobao.org/tinycolor2/download/tinycolor2-1.4.1.tgz#f4fad333447bc0b07d4dc8e9209d8f39a8ac77e8"
 
 to-arraybuffer@^1.0.0:
   version "1.0.1"

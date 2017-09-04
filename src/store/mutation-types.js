@@ -1,3 +1,5 @@
 export const GET_HISTORY_DATA1 = 'GET_HISTORY_DATA1'
 export const GET_HISTORY_DATA0 = 'GET_HISTORY_DATA0'
 export const GET_HISTORY_DATA_1 = 'GET_HISTORY_DATA_1'
+
+export const SET_TOKEN = 'SET_TOKEN'

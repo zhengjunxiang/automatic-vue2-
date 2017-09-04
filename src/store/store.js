@@ -1,15 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import axios from 'axios'
 
-import {home} from './modules/'
-// import {GET_HISTORY_DATA} from './mutation-types'
+import { home, user } from './modules/'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   modules: {
-    home
+    home,
+    user
   }
 })
 

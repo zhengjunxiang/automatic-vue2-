@@ -4,17 +4,19 @@
       <balance :userSunInfo="userSunInfo"></balance>
     </Tab-pane>
     <Tab-pane label="账户信息" name="account">
-      <h2>账户信息</h2>
+      <user-info></user-info>
     </Tab-pane>
   </Tabs>
 </template>
 <script>
 import Balance from './Balance';
+import UserInfo from './UserInfo';
 import config from '@/config';
 export default {
   name: 'User',
   components: {
-    Balance
+    Balance,
+    UserInfo
   },
   data () {
     return {

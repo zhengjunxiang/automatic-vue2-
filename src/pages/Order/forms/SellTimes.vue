@@ -8,13 +8,13 @@
     <Form-item label="扫单范围：" prop="orderDepth">
       <Row>
         <Col span="18"><Input v-model="formValidate.orderDepth" icon="social"></Input></Col>
-        <Col span="5" offset="1">(参考值：0.1%)</Col>
+        <Col span="5">(参考值：0.1%)</Col>
       </Row>
     </Form-item>
     <Form-item label="扫单比例：" prop="tradeRatio">
       <Row>
         <Col span="18"><Input v-model="formValidate.tradeRatio" icon="social"></Input></Col>
-        <Col span="5" offset="1">(参考值：10%)</Col>
+        <Col span="5">(参考值：10%)</Col>
       </Row>
     </Form-item>
     <Form-item label="单笔委托上限：" prop="borderAmount">
@@ -30,7 +30,7 @@
     <Form-item label="委托间隔：" prop="tradeInterval">
       <Row>
         <Col span="18"><Input v-model="formValidate.tradeInterval" icon="second"></Input></Col>
-        <Col span="5" offset="1">(参考值：10s)</Col>
+        <Col span="5">(参考值：10s)</Col>
       </Row>
     </Form-item>
   </Form>

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { GET_HISTORY_DATA1, GET_HISTORY_DATA0, GET_HISTORY_DATA_1 } from '../mutation-types'
-import config from '../../config.js'
+import config from '@/config.js'
 
 const home = {
   namespaced: true,
@@ -63,8 +63,7 @@ const home = {
     },
     fetchHistory_1({ commit }) {
       return new Promise((resolve, reject) => {
-        // axios.get('http://localhost:3001/history?isFinish=-1')
-        axios.get('http://192.168.170.104:8080/history?isFinish=-1')
+        axios.get(`${config.apiHost}/history?isFinish=-1`)
          .then(response => {
            commit({
              type: GET_HISTORY_DATA_1,

@@ -3,8 +3,8 @@
     <Tab-pane label="卖出" name="sell">
       <Form label-position="left" :label-width="90">
         <Form-item label="委托类型：">
-          <Row>
-            <Col span="18">
+          <Row type="flex">
+            <Col :span="18">
               <Select v-model="sellTradeType" @on-change="handleSelectSellClick">
                 <Option v-for="item in tradeTypeArr" :value="item.id" :key="item.id">{{item.name}}</Option>
               </Select>
@@ -142,7 +142,7 @@ export default {
         url: `${config.apiHost}/${url}`,
         data: formData,
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/x-www-form-urlencoded'
         }
       }).then(res => {
         if (this.sellTypeValue === '冰山委托' && tabType === 'sell') {

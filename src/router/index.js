@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 const Login = () => import('../pages/Login/')
+const Layout = () => import('../pages/layout/Layout')
 const Home = () => import('../pages/Home/')
 const Order = () => import('../pages/Order/')
 const Configuration = () => import('../pages/Configuration/')
@@ -20,19 +21,27 @@ export default new Router({
     }, {
       path: '/',
       name: 'Home',
-      component: Home
+      redirect: '/home',
+      component: Layout,
+      children: [{ path: 'home', component: Home }]
     }, {
       path: '/order',
       name: 'Order',
-      component: Order
+      redirect: '/order/index',
+      component: Layout,
+      children: [{ path: 'index', component: Order }]
     }, {
       path: '/configuration',
       name: 'Configuration',
-      component: Configuration
+      redirect: '/configuration/index',
+      component: Layout,
+      children: [{ path: 'index', component: Configuration }]
     }, {
       path: '/user',
       name: 'User',
-      component: User
+      redirect: '/user/index',
+      component: Layout,
+      children: [{ path: 'index', component: User }]
     }, {
       path: '*',
       redirect: {

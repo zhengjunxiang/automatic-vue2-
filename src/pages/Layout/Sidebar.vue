@@ -1,17 +1,20 @@
 <template>
   <div class="sidebar">
     <switcher @changeSidebarState="changeSidebarState" :switcherStateClose="sidebarStateClose"></switcher>
-    <Menu theme="dark" active-name="1" width="auto" :class="{'siderbar-state-close': this.sidebarStateClose}">
-      <Menu-item name="1">
+    <Menu
+      theme="dark" :active-name="$route.path" width="auto"
+      :class="{'siderbar-state-close': this.sidebarStateClose}"
+      >
+      <Menu-item name="/home">
         <router-link to="/" exact><Icon type="home"></Icon>首页</router-link>
       </Menu-item>
-      <Menu-item name="2">
+      <Menu-item name="/order/index">
         <router-link to="/order" exact><Icon type="archive"></Icon>委托下单</router-link>
       </Menu-item>
-      <Menu-item name="3">
+      <Menu-item name="/configuration/index">
         <router-link to="/configuration" exact><Icon type="ios-settings-strong"></Icon>配置</router-link>
       </Menu-item>
-      <Menu-item name="4">
+      <Menu-item name="/user/index">
         <router-link to="/user" exact><Icon type="person"></Icon>用户</router-link>
       </Menu-item>
     </Menu>
@@ -42,7 +45,7 @@ export default {
       height: 50px;
       line-height: 50px;
       a {
-        color: @gray-light;
+        color: @gray;
         display: inline-block;
         padding-left: 21px;
         width: 100%;
@@ -55,6 +58,9 @@ export default {
       .router-link-active {
         color: @base;
       }
+    }
+    .ivu-menu-item:hover a {
+      color: #ffffff !important;
     }
   }
   .siderbar-state-close {

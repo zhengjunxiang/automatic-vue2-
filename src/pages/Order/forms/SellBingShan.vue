@@ -13,7 +13,7 @@
     <Form-item label="委托深度：" prop="orderDepth">
       <Row>
         <Col span="18"><Input v-model="formValidate.orderDepth" icon="social"></Input></Col>
-        <Col span="5" offset="1">(参考值：0.1%)</Col>
+        <Col span="5">(参考值：0.1%)</Col>
       </Row>
     </Form-item>
     <Form-item label="最低价格：" prop="borderPrice">
