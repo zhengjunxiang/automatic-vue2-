@@ -46,6 +46,7 @@ export default {
       this.symbol = name;
       this.$nextTick(() => {
         this.$refs.asksAndDids.fetchAsksAndDidsData();
+        this.$refs.asksAndDids.resetTotal();
         this.$refs.logInformation.fetchDealsTradeList(this.setMiddleBoxDomH);
         this.$refs.logInformation.fetchHistoryTradeList(this.setMiddleBoxDomH);
       });

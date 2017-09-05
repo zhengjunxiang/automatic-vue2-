@@ -39,11 +39,14 @@ export default {
     window.clearInterval(this.timer);
   },
   methods: {
+    resetTotal() {
+      this.totalData = [];
+    },
     fetchAsksAndDidsData () {
       this.$http.get(`${config.apiHost}/depth?symbol=${this.symbol}`)
       .then(response => {
         const data = response.data;
-        if (data) {
+        if (Object.keys(data).length > 0 && (data.symbol === this.symbol)) {
           const Len = data.asks.length;
           this.asksData = data.asks.map((item, index) => ({
             name: `卖(${Len - index})`,
