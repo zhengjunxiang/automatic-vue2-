@@ -1,9 +1,12 @@
 // es6 polyfill
 /* eslint-disable */
-// import 'core-js/fn/array/find-index';
+import 'core-js/fn/array/find';
+import 'core-js/fn/array/find-index';
 
 // import Affix from 'iview/src/components/affix';
 // import Alert from 'iview/src/components/alert';
+// import AutoComplete from 'iview/src/components/auto-complete';
+import Avatar from 'iview/src/components/avatar';
 // import BackTop from 'iview/src/components/back-top';
 // import Badge from 'iview/src/components/badge';
 // import Breadcrumb from 'iview/src/components/breadcrumb';
@@ -14,6 +17,7 @@ import Button from 'iview/src/components/button';
 // import Checkbox from 'iview/src/components/checkbox';
 // import Circle from 'iview/src/components/circle';
 // import Collapse from 'iview/src/components/collapse';
+// import ColorPicker from 'iview/src/components/color-picker';
 // import DatePicker from 'iview/src/components/date-picker';
 // import Dropdown from 'iview/src/components/dropdown';
 import Form from 'iview/src/components/form';
@@ -50,6 +54,8 @@ import locale from 'iview/src/locale';
 const iview = {
     // Affix,
     // Alert,
+    // AutoComplete,
+    Avatar,
     // BackTop,
     // Badge,
     // Breadcrumb,
@@ -63,6 +69,7 @@ const iview = {
     // Cascader,
     // Checkbox,
     // CheckboxGroup: Checkbox.Group,
+    // ColorPicker,
     // iCircle: Circle,
     // DatePicker,
     // Dropdown,

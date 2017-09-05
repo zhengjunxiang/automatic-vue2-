@@ -20,9 +20,7 @@
             </Row>
           </Form-item>
           <Form-item>
-            <Row>
-              <Col><Button type="primary" :loading="loading" long>确认提交</Button></Col>
-            </Row>
+            <Button type="primary" :loading="loading" long @click.native.prevent="handleLogin">确认提交</Button>
           </Form-item>
         </Form>
       </Col>
@@ -30,30 +28,75 @@
   </div>
 </template>
 <script>
+import conf from '@/config';
 export default {
   name: "UserInfo",
-  data: () => ({
-    formValidate: {
+  data () {
+    const validateOldpassword = (rule, value, callback) => {
+      if(this.formValidate.newPassword !== this.formValidate.password) {
+        callback(new Error('密码不一致！'));
+      } else {
+        callback();
+      }
+    };
+    return {
       loading: false,
-      oldPassword: '',
-      newPassword: '',
-      password: '',
-    },
-    ruleValidate: {
-      oldPassword: [
-        { required: true, message: '不能为空', trigger: 'blur' },
-        { validator: 'Number', trigger: 'blur' }
-      ],
-      newPassword: [
-        { required: true, message: '不能为空', trigger: 'blur' },
-        { validator: 'Number', trigger: 'blur' }
-      ],
-      password: [
-        { required: true, message: '不能为空', trigger: 'blur' },
-        { validator: 'Number', trigger: 'blur' }
-      ]
+      formValidate: {
+        oldPassword: '',
+        newPassword: '',
+        password: '',
+      },
+      ruleValidate: {
+        oldPassword: [
+          { required: true, message: '不能为空', trigger: 'blur' },
+          { validator: 'Number', trigger: 'blur' }
+        ],
+        newPassword: [
+          { required: true, message: '不能为空', trigger: 'blur' },
+          { validator: 'Number', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '不能为空', trigger: 'blur' },
+          { validator: validateOldpassword, trigger: 'blur' }
+        ]
+      }
     }
-  })
+  },
+  methods: {
+    handleLogin() {
+      this.loading = true;
+      this.$refs['formValidate'].validate((valid) => {
+        if (valid) {
+          let formData = {
+            oldPassword: this.formValidate.oldPassword,
+            newPassword: this.formValidate.newPassword
+          };
+          this.$http({
+            method:'post',
+            url: `${conf.apiHost}/updatePsw`,
+            data: formData,
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          }).then(res => {
+            if (res.data.result) {
+              this.$Message.success(res.data.message || '密码修改成功!');
+              this.$refs['formValidate'].resetFields();
+            } else {
+              this.$Message.error(res.data.message || '密码修改失败!');
+            }
+          }).catch(err => {
+            console.log('err', err)
+            this.$Message.error(err || '密码修改失败!');
+          });
+          this.loading = false
+        } else {
+          this.loading = false;
+          this.$Message.error('验证失败!');
+        }
+      })
+    }
+  }
 }
 </script>
 <style lang="less" scoped>

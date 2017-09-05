@@ -12,6 +12,7 @@ const NotFoundComponent = () => import('../pages/NotFoundComponent')
 Vue.use(Router)
 
 export default new Router({
+  scrollBehavior: () => ({ y: 0 }),
   mode: 'history',
   routes: [
     {
@@ -43,10 +44,14 @@ export default new Router({
       component: Layout,
       children: [{ path: 'index', component: User }]
     }, {
+      path: '/404',
+      redirect: '/404/index',
+      name: '404',
+      component: Layout,
+      children: [{ path: 'index', component: NotFoundComponent }]
+    }, {
       path: '*',
-      redirect: {
-        name: 'Login'
-      }
+      redirect: '/404'
     }
   ]
 })

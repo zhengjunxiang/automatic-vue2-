@@ -3,11 +3,14 @@
     <div class="logo">
       <h1>自动下单系统</h1>
     </div>
+    <div class="avatar-container">
+      <Avatar icon="person" />
+    </div>
   </div>
 </template>
 <script>
 export default {
-  name: "Header",
+  name: 'Header',
   data: () => ({
 
   })

@@ -1,12 +1,16 @@
 <template>
 <div class="login-container">
-  <Form ref="formValidate" :rules="ruleValidate" :model="formValidate" :label-width="80" class="card-box login-form">
+  <Form ref="formValidate" :rules="ruleValidate" :model="formValidate" class="card-box login-form">
     <h3 class="title">系统登录</h3>
-    <Form-item prop="loginName" label="账号">
-      <Input v-model="formValidate.loginName" autoComplete="on" placeholder="账号"></Input>
+    <Form-item prop="loginName">
+      <Input v-model="formValidate.loginName" autoComplete="on" placeholder="账号">
+        <Icon type="person" slot="prepend"></Icon>
+      </Input>
     </Form-item>
-    <Form-item prop="password" label="密码">
-      <Input @keyup.enter.native="handleLogin" v-model="formValidate.password" autoComplete="on" placeholder="密码"></Input>
+    <Form-item prop="password">
+      <Input type="password" @keyup.enter.native="handleLogin" v-model="formValidate.password" autoComplete="on" placeholder="密码">
+        <Icon type="lock-combination" slot="prepend"></Icon>
+      </Input>
     </Form-item>
     <Form-item>
       <Button type="primary" long :loading="loading" @click.native.prevent="handleLogin" size="large">
@@ -67,7 +71,7 @@ export default {
               return null;
             }
             this.loading = false;
-            this.$Message.error(res.message || '登录成功!');
+            this.$Message.error(res.message || '登录失败!');
           }).catch(error => {
             this.loading = false;
             this.$Message.error(error.message || '登录失败!');

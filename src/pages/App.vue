@@ -1,10 +1,6 @@
 <template>
   <div class="app-container">
-    <transition name="fade" mode="out-in" appear>
-      <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
-    </transition>
+    <router-view></router-view>
   </div>
 </template>
 

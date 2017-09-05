@@ -36,7 +36,7 @@
   </Form>
 </template>
 <script>
-import {reg, mes} from '../../../utils/utils';
+import {reg, mes} from '@/utils/utils';
 export default {
   name: "SellTimes",
   data () {
