@@ -14,5 +14,6 @@
 - `cd automatic-vue2-`
 - `yarn install` 或 `cnpm install` 或 `npm install` (确保已安装'node', 'yarn'或'cnpm')
 - `npm run dev` (开发配置)
-- `npm run serve` (启动本地api服务)
-- `npm run prod` (发布配置)
+- `npm run serve` (启动本地api服务：只有少部分的api请求)
+- `npm run build` (发布配置)
+- `npm run build:nw` (包桌面应用：配置可在builder.js中修改)

@@ -4,13 +4,15 @@
   "description": "vue2-demo",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --config ./build/webpack.dev.js --progress",
+    "dev": "node build/dev-server.js",
     "build": "npm run clean && cross-env NODE_ENV=production webpack --config ./build/webpack.prod.js --progress",
     "build:w": "npm run clean && cross-env NODE_ENV=production webpack --watch --config ./build/webpack.prod.js --progress",
     "clean": "rimraf ./dist/*",
     "open": "opn http://localhost:9090 && node ./server/server-dist.js",
     "prod": "npm run build && npm run open",
-    "serve": "cd ./server && nodemon server-api.js"
+    "serve": "cd ./server && nodemon server-api.js",
+    "buildNW": "cp ./nwpackage/package.json ./dist && rimraf ./buildNW/* && node builder.js",
+    "build:nw": "npm run build && npm run buildNW"
   },
   "keywords": [
     "vue2",
@@ -42,6 +44,7 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-2": "^6.24.1",
     "babel-register": "^6.26.0",
+    "chalk": "^2.1.0",
     "cors": "^2.8.3",
     "cross-env": "^5.0.1",
     "css-loader": "^0.28.4",
@@ -50,6 +53,7 @@
     "eslint-loader": "^1.9.0",
     "eslint-plugin-html": "^2.0.0",
     "eslint-plugin-standard": "^2.0.1",
+    "eventsource-polyfill": "^0.9.6",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
     "friendly-errors-webpack-plugin": "^1.6.1",
@@ -57,9 +61,12 @@
     "inline-manifest-webpack-plugin": "^3.0.1",
     "less": "^2.7.2",
     "less-loader": "^4.0.4",
+    "nw-builder": "^3.4.1",
     "opn-cli": "^3.1.0",
     "postcss-loader": "^2.0.6",
     "rimraf": "^2.6.1",
+    "semver": "^5.4.1",
+    "shelljs": "^0.7.8",
     "style-loader": "^0.18.2",
     "url-loader": "^0.5.9",
     "vue-loader": "^13.0.1",
@@ -67,7 +74,8 @@
     "vue-template-compiler": "^2.4.1",
     "webpack": "^3.5.5",
     "webpack-chunk-hash": "^0.4.0",
-    "webpack-dev-server": "^2.7.1",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-hot-middleware": "^2.18.2",
     "webpack-merge": "^4.1.0"
   },
   "repository": {
