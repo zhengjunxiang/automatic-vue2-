@@ -1,5 +1,3 @@
-// import axios from 'axios';
-// import conf from '@/config';
 import fetch from '@/utils/fetch';
 
 export function login(loginName, password) {

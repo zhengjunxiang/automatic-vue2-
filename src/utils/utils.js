@@ -1,11 +1,5 @@
 import moment from 'moment'
 
-const utils = {
-  useElement(vue, ...reset) {
-    reset.map(item => vue.use(item))
-  }
-}
-
 const selectStatus = (state, type) => {
   const isColor = type === 'color'
   switch (state - 0) {

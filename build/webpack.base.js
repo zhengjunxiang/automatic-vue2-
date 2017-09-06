@@ -2,16 +2,9 @@
 const Path = require('path');
 const Webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const vueLoaderConfig = require('./vue-loader.conf');
-
 // 根据NODE_ENV来启用
-const Extract = new ExtractTextPlugin({
-  allChunks: true,
-  filename: "style/style.[name].[contenthash:8].css",
-  disable: process.env.NODE_ENV === "development"
-});
 
 function resolve (dir) {
   return Path.join(__dirname, '..', dir)
@@ -37,25 +30,13 @@ const config = {
         loader: 'vue-loader',
         options: vueLoaderConfig
       }, {
-        test: /\.css/,
-        use: Extract.extract({
-          fallback: "style-loader",
-          use: ['css-loader?importLoaders=1']
-        })
-      }, {
-        test: /\.less$/,
-        use: Extract.extract({
-          fallback: "style-loader",
-          use: ['css-loader', 'less-loader']
-        })
-      }, {
         test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader?cacheDirectory=true'
-        }
+        loader: 'babel-loader',
+        include: [resolve('src')]
       }, {
-        test: /iview.src.*?js$/, loader: 'babel-loader'
+        test: /iview.src.*?js$/,
+        loader: 'babel-loader',
+        include: [resolve('node_modules')]
       }, {
         test: /\.(jpe?g|png|gif|svg)(\?\S*)?$/i,
         use: ['url-loader?limit=10000&name=[name].[ext]&outputPath=assets/images/']
@@ -79,11 +60,15 @@ const config = {
       name: 'vendor',
       minChunks: function(module) {
         // 该配置假定你引入的 vendor 存在于 node_modules 目录中
-        return ( (module.context && module.context.indexOf('iview') !== -1) || (module.context && module.context.indexOf('node_modules') !== -1) ) ;
+        return module.context && module.context.indexOf('node_modules') !== -1;
       }
     }),
-    new HtmlWebpackPlugin({title: '自动下单系统', filename: 'index.html', template: 'src/index.html'}),
-    Extract,
+    new HtmlWebpackPlugin({
+      title: '自动下单系统',
+      filename: 'index.html',
+      template: 'src/index.html',
+      inject: true
+    }),
     new Webpack.optimize.ModuleConcatenationPlugin()
   ]
 }

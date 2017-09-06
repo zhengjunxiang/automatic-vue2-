@@ -1,18 +1,14 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
 import axios from 'axios'
-import Iview from './components/iview'
 import router from './router'
 import App from './pages/App.vue'
 import store from './store/store'
-import { utils } from './utils/utils'
 import { getToken } from './utils/auth'
 
-import './style/iview/index.less'
+import Iview from 'iview';
+import 'iview/dist/styles/iview.css'
 
-utils.useElement(
-  Vue, Vuex, Iview
-);
+Vue.use(Iview);
 
 const whiteList = ['/login'];
 router.beforeEach((to, from, next) => {

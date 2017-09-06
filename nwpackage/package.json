@@ -1,0 +1,10 @@
+{
+  "name": "automatic",
+  "main": "index.html",
+  "version": "0.24.4",
+  "window": {
+   "toolbar": false,
+       "width": 1280,
+       "height": 960
+   }
+}

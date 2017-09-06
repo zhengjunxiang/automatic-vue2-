@@ -6,25 +6,21 @@
         <sidebar @changeAppState="changeAppState" :sidebarStateClose="appStateClose"></sidebar>
       </Col>
       <Col class="views">
-        <transition name="fade" mode="out-in" appear>
-          <keep-alive>
-            <router-view></router-view>
-          </keep-alive>
-        </transition>
+        <app-main></app-main>
       </Col>
     </Row>
   </div>
 </template>
 
 <script>
-import HeaderNav from './Header';
-import Sidebar from './Sidebar';
+import { HeaderNav, Sidebar, AppMain } from './index';
 
 export default {
   name: 'Layout',
   components: {
     HeaderNav,
-    Sidebar
+    Sidebar,
+    AppMain
   },
   methods: {
     changeAppState() {

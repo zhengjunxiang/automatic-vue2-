@@ -3,12 +3,12 @@
   <Form ref="formValidate" :rules="ruleValidate" :model="formValidate" class="card-box login-form">
     <h3 class="title">系统登录</h3>
     <Form-item prop="loginName">
-      <Input v-model="formValidate.loginName" autoComplete="on" placeholder="账号">
+      <Input v-model="formValidate.loginName" autoComplete="on" placeholder="账号" autocomplete="off" :autofocus="true">
         <Icon type="person" slot="prepend"></Icon>
       </Input>
     </Form-item>
     <Form-item prop="password">
-      <Input type="password" @keyup.enter.native="handleLogin" v-model="formValidate.password" autoComplete="on" placeholder="密码">
+      <Input type="password" @keyup.enter.native="handleLogin" v-model="formValidate.password" autoComplete="on" placeholder="密码" autocomplete="off">
         <Icon type="lock-combination" slot="prepend"></Icon>
       </Input>
     </Form-item>
@@ -65,6 +65,8 @@ export default {
             if (res.result) {
               this.$Message.success(res.message || '登录成功!');
               setTimeout(() => {
+                this.formValidate.loginName = '';
+                this.formValidate.password = '';
                 this.loading = false;
                 this.$router.push({ path: '/' });
               }, 600);

@@ -1,7 +1,3 @@
 export default {
-  apiHost: 'http://192.168.170.104:8080',
-  user: {
-    name: 'admin',
-    password: 'admin123456'
-  }
+  apiHost: process.env.NODE_ENV === 'development' ? 'http://192.168.170.104:8080' : 'http://127.0.0.1:8080'
 }
