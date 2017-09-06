@@ -8,6 +8,7 @@
 3. 路由懒加载
 4. 公共库代码提取
 5. express 模拟api请求
+6. 打包桌面应用（./buildNW）
 
 项目启动：
 - `git clone https://github.com/zhengjunxiang/automatic-vue2-.git`

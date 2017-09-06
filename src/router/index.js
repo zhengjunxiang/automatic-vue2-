@@ -1,20 +1,20 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-// const Login = () => import('../pages/Login/')
-// const Layout = () => import('../pages/layout/Layout')
-// const Home = () => import('../pages/Home/')
-// const Order = () => import('../pages/Order/')
-// const Configuration = () => import('../pages/Configuration/')
-// const User = () => import('../pages/User/')
-// const NotFoundComponent = () => import('../pages/NotFoundComponent')
-import Login from '../pages/Login/';
-import Layout from '../pages/layout/Layout';
-import Home from '../pages/Home/';
-import Order from '../pages/Order/';
-import Configuration from '../pages/Configuration/';
-import User from '../pages/User/';
-import NotFoundComponent from '../pages/NotFoundComponent';
+const Login = () => import('../pages/Login/')
+const Layout = () => import('../pages/layout/Layout')
+const Home = () => import('../pages/Home/')
+const Order = () => import('../pages/Order/')
+const Configuration = () => import('../pages/Configuration/')
+const User = () => import('../pages/User/')
+const NotFoundComponent = () => import('../pages/NotFoundComponent')
+// import Login from '../pages/Login/';
+// import Layout from '../pages/layout/Layout';
+// import Home from '../pages/Home/';
+// import Order from '../pages/Order/';
+// import Configuration from '../pages/Configuration/';
+// import User from '../pages/User/';
+// import NotFoundComponent from '../pages/NotFoundComponent';
 
 Vue.use(Router)
 
