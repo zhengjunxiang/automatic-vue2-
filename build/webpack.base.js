@@ -67,6 +67,7 @@ const config = {
       title: '自动下单系统',
       filename: 'index.html',
       template: 'src/index.html',
+      favicon: resolve('favicon.ico'),
       inject: true
     }),
     new Webpack.optimize.ModuleConcatenationPlugin()
