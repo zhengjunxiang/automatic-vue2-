@@ -76,7 +76,7 @@ export default {
             this.$Message.error(res.message || '登录失败!');
           }).catch(error => {
             this.loading = false;
-            this.$Message.error(error.message || '登录失败!');
+            this.$Message.error('登录失败!');
           });
         } else {
           this.$Message.error('登录验证失败!');
