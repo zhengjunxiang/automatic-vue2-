@@ -1,6 +1,6 @@
 <template>
   <Row>
-    <Col :span="22">
+    <Col>
       <Tabs value="1" @on-click="fetchHistory">
         <Tab-pane label="已完成" name="1">
           <Table border :columns="columns" :data="dealedCurrentData1"></Table>

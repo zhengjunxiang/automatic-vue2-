@@ -16,7 +16,7 @@
         <sell-and-buy :symbol="symbol"></sell-and-buy>
       </Col>
       <Col :md="12" style="overflow: hidden">
-        <asks-and-dids :symbol="symbol" :number="number" ref="asksAndDids"></asks-and-dids>
+        <asks-and-dids :symbol="symbol" :oldSymbol="oldSymbol" :number="number" ref="asksAndDids"></asks-and-dids>
       </Col>
     </div>
     <Col span="24" class="logInformation-box" id="logInformationBox">
@@ -33,6 +33,7 @@ export default {
   data () {
     return {
       symbol: 'btc_cny',
+      oldSymbol: 'btc_cny',
       number: 7
     }
   },
@@ -43,9 +44,9 @@ export default {
   },
   methods: {
     handleDealSelect(name) {
+      this.oldSymbol = this.symbol;
       this.symbol = name;
       this.$nextTick(() => {
-        this.$refs.asksAndDids.resetTotal();
         this.$refs.asksAndDids.changeSymbol();
         this.$refs.logInformation.fetchDealsTradeList(this.setMiddleBoxDomH);
         this.$refs.logInformation.fetchHistoryTradeList(this.setMiddleBoxDomH);
