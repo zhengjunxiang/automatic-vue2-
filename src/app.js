@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import router from './router'
-import App from './pages/App.vue'
+import App from './views/App.vue'
 import store from './store/store'
 import { getToken } from './utils/auth'
 

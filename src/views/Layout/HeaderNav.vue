@@ -22,7 +22,9 @@ export default {
         onOk: () => {
           this.$store.dispatch('FedLogOut').then(() => {
             window.setTimeout(() => {
-              this.$router.push({name: 'Login'});
+              this.$router.push({
+                name: 'Login'
+              });
             }, 600);
           });
         }
@@ -52,8 +54,8 @@ export default {
         line-height: 60px;
         height: 60px;
         .ivu-btn {
-          color: @base-light;
-          border: 1px solid @base-light;
+            color: @base-light;
+            border: 1px solid @base-light;
         }
     }
 }

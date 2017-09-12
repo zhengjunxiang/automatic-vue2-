@@ -1,20 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+const _import = require('./_import_' + process.env.NODE_ENV)
 
-// const Login = () => import('../pages/Login/')
-// const Layout = () => import('../pages/layout/Layout')
-// const Home = () => import('../pages/Home/')
-// const Order = () => import('../pages/Order/')
-// const Configuration = () => import('../pages/Configuration/')
-// const User = () => import('../pages/User/')
-// const NotFoundComponent = () => import('../pages/NotFoundComponent')
-import Login from '../pages/Login/';
-import Layout from '../pages/layout/Layout';
-import Home from '../pages/Home/';
-import Order from '../pages/Order/';
-import Configuration from '../pages/Configuration/';
-import User from '../pages/User/';
-import NotFoundComponent from '../pages/NotFoundComponent';
+const Login = _import('Login/index')
+import Layout from '@/views/Layout/Layout'
+const Home = _import('Home/index')
+const Order = _import('Order/index')
+const Configuration = _import('Configuration/index')
+const User = _import('User/index')
+const NotFoundComponent = _import('NotFoundComponent')
 
 Vue.use(Router)
 
