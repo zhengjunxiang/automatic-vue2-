@@ -7,7 +7,7 @@ import pako from 'pako';
 export default {
   name: "asksAndDids",
   timer: null,
-  props: ['symbol'],
+  props: ['symbol', 'number'],
   data () {
     return {
       columnsAsksAndBids: [
@@ -27,7 +27,6 @@ export default {
       ],
       okWS: null,
       hbWS: null,
-      number: 7,
       asksOkData: [],
       bidsOkData: [],
       asksHbData: [],
@@ -71,17 +70,14 @@ export default {
     },
     setTotalData() {
       let asksData = [], bidsData = [];
-      asksData = this.asksOkData.concat(this.asksHbData).sort((m, n) => {
-        return n[0] - m[0];
-      }).slice((asksData.length - this.number - 1), (asksData.length - 1)).map((item, index) => ({
+      const aData = this.asksOkData.concat(this.asksHbData).sort((m, n) => n[0] - m[0]);
+      asksData = aData.slice((aData.length - this.number), aData.length).map((item, index) => ({
         name: `卖(${this.number - index})`,
         price: item[0],
         orders: item[1],
         platform: item[2]
       }));
-      bidsData = this.bidsOkData.concat(this.bidsHbData).sort((m, n) => {
-        return n[0] - m[0];
-      }).slice(0, this.number).map((item, index) => ({
+      bidsData = this.bidsOkData.concat(this.bidsHbData).sort((m, n) => n[0] - m[0]).slice(0, this.number).map((item, index) => ({
         name: `买(${index + 1})`,
         price: item[0],
         orders: item[1],

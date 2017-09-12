@@ -8,6 +8,7 @@
         <Menu-item name="ltc_cny">
           LTC交易
         </Menu-item>
+        <InputNumber :max="10" :min="5" :step="1" v-model="number"></InputNumber>
       </Menu>
     </Col>
     <div class="middle-box" id="middleBox">
@@ -15,7 +16,7 @@
         <sell-and-buy :symbol="symbol"></sell-and-buy>
       </Col>
       <Col :md="12" style="overflow: hidden">
-        <asks-and-dids :symbol="symbol" ref="asksAndDids"></asks-and-dids>
+        <asks-and-dids :symbol="symbol" :number="number" ref="asksAndDids"></asks-and-dids>
       </Col>
     </div>
     <Col span="24" class="logInformation-box" id="logInformationBox">
@@ -32,8 +33,7 @@ export default {
   data () {
     return {
       symbol: 'btc_cny',
-      type: {
-      }
+      number: 7
     }
   },
   components: {
