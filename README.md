@@ -3,12 +3,11 @@
 #### 用户管理后台单页面应用
 
 **特点**
-1. 实现 **iview2** 组件和样式按需加载 （src/components/iview 和 src/style/iview）
-2. `webpack` 的 `chunkhash` 缓存
-3. 路由懒加载
-4. 公共库代码提取
-5. express 模拟api请求
-6. 打包桌面应用（./buildNW）
+1. `webpack` 的 `chunkhash` 缓存
+2. 路由懒加载
+3. 公共库代码提取
+4. express 模拟api请求
+5. 打包桌面应用（./buildNW）
 
 项目启动：
 - `git clone https://github.com/zhengjunxiang/automatic-vue2-.git`
