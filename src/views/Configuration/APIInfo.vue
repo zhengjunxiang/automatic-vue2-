@@ -108,7 +108,7 @@ export default {
       this.$refs.apiModal.showApiModal();
     },
     fetchApiInfoList() {
-      this.$http.get(`${config.apiHost}/apiInfoList`).
+      this.$http.get(`${config.apiHost}/api/apiInfoList`).
         then(response => {
           if (response.data && response.data.data.length > 0) {
             this.apiInfoListData = [].concat(response.data.data);
@@ -119,7 +119,7 @@ export default {
         });
     },
     fetchPlatformList() {
-      this.$http.get(`${config.apiHost}/platformList?type=select`).
+      this.$http.get(`${config.apiHost}/platform/platformList?type=select`).
         then(response => {
           if (response.data && response.data.data.length > 0) {
             this.platforsmData = [].concat(response.data.data);
@@ -129,7 +129,7 @@ export default {
         });
     },
     fetchGetApiInfo(id) {
-      this.$http.get(`${config.apiHost}/getApiInfo?id=${id}`).
+      this.$http.get(`${config.apiHost}/api/getApiInfo?id=${id}`).
         then(response => {
           if (response.data && Object.keys(response.data).length > 0) {
             const apiInfoData = {...response.data};
@@ -140,7 +140,7 @@ export default {
         });
     },
     fetchDelApiInfo(id) {
-      this.$http.get(`${config.apiHost}/delApiInfo?id=${id}`).
+      this.$http.get(`${config.apiHost}/api/delApiInfo?id=${id}`).
         then(response => {
           this.$Message.success(`请求delApiInfo数据成功`);
           this.fetchApiInfoList();

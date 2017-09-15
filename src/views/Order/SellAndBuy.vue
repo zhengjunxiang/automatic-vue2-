@@ -139,7 +139,7 @@ export default {
       }
       this.$http({
         method:'post',
-        url: `${config.apiHost}/${url}`,
+        url: `${config.apiHost}/trade/${url}`,
         data: formData,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -171,7 +171,7 @@ export default {
       return formData;
     },
     fetchTradetype () {
-      this.$http.get(`${config.apiHost}/tradetype`)
+      this.$http.get(`${config.apiHost}/trade/tradetype`)
         .then(response => {
           if (response.data &&  response.data.data.length > 0) {
             this.tradeTypeArr = response.data.data;

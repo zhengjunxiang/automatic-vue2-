@@ -20,12 +20,19 @@ export default {
       this.$Modal.confirm({
         content: '<h3>确认退出吗？</h3>',
         onOk: () => {
-          this.$store.dispatch('FedLogOut').then(() => {
-            window.setTimeout(() => {
-              this.$router.push({
-                name: 'Login'
-              });
-            }, 600);
+          this.$store.dispatch('LogOut').then(res => {
+            if (res.data.result === true) {
+              this.$Message.success(res.data.message || '退出成功！')
+              window.setTimeout(() => {
+                this.$router.push({
+                  name: 'Login'
+                });
+              }, 600);
+            }
+            this.$Message.error(res.data.message || '退出失败！')
+          }).catch(err => {
+            console.log('err', err)
+            this.$Message.error(err.data.message || '退出失败！')
           });
         }
       });

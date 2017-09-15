@@ -26,7 +26,7 @@ const config = function(env) {
         debug: false
       }),
       new Webpack.DefinePlugin({
-        'process.env': {'NODE_ENV': JSON.stringify('production')}
+        'process.env': conf.build.env
       }),
       new Webpack.optimize.UglifyJsPlugin({
         beautify: false,

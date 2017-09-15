@@ -79,7 +79,7 @@ export default {
         if (valid) {
           this.$http({
             method:'post',
-            url: `${config.apiHost}/saveApiInfo`,
+            url: `${config.apiHost}/api/saveApiInfo`,
             data: this.formValidate,
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',

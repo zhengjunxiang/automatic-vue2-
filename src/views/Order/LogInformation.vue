@@ -349,19 +349,19 @@ export default {
   created () {
     this.currentDealsColumns = this.columnsNormal;
     this.currentHistoryColumns = this.columnsNormal;
-    this.fetchDealsTradeList(this.setMiddleBoxDomH);
+    // this.fetchDealsTradeList(this.setMiddleBoxDomH);
   },
   activated() {
-    this.timer = window.setInterval(() => {
-      if (this.currentTab === 'deal') {
-        this.fetchDealsTradeList(this.setMiddleBoxDomH);
-      } else if (this.currentTab === 'history') {
-        this.fetchHistoryTradeList(this.setMiddleBoxDomH);
-      }
-    }, 1000)
+    // this.timer = window.setInterval(() => {
+    //   if (this.currentTab === 'deal') {
+    //     this.fetchDealsTradeList(this.setMiddleBoxDomH);
+    //   } else if (this.currentTab === 'history') {
+    //     this.fetchHistoryTradeList(this.setMiddleBoxDomH);
+    //   }
+    // }, 1000)
   },
   deactivated() {
-    window.clearInterval(this.timer);
+    // window.clearInterval(this.timer);
   }
 }
 </script>

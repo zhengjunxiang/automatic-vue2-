@@ -93,7 +93,7 @@ export default {
       this.$refs.platformModal.showApiModal();
     },
     fetchPlatformList() {
-      this.$http.get(`${config.apiHost}/platformList?type=select`).
+      this.$http.get(`${config.apiHost}/platform/platformList?type=select`).
         then(response => {
           if (response.data && response.data.data.length > 0) {
             this.platforsmData = [].concat(response.data.data);
@@ -103,7 +103,7 @@ export default {
         });
     },
     fetchPlatformInfoList() {
-      this.$http.get(`${config.apiHost}/platformList?type=show`).
+      this.$http.get(`${config.apiHost}/platform/platformList?type=show`).
         then(response => {
           if (response.data && response.data.data.length > 0) {
             this.apiInfoListData = [].concat(response.data.data);
@@ -114,7 +114,7 @@ export default {
         });
     },
     fetchGetPlatformInfo(id) {
-      this.$http.get(`${config.apiHost}/getPlatform?id=${id}`).
+      this.$http.get(`${config.apiHost}/platform/getPlatform?id=${id}`).
         then(response => {
           if (response.data && Object.keys(response.data).length > 0) {
             const apiInfoData = {...response.data.data};
@@ -125,7 +125,7 @@ export default {
         });
     },
     fetchDelPlatformInfo(id) {
-      this.$http.get(`${config.apiHost}/delPlatform?id=${id}`).
+      this.$http.get(`${config.apiHost}/platform/delPlatform?id=${id}`).
         then(response => {
           this.$Message.success(`请求delPlatform数据成功`);
           this.fetchPlatformInfoList();

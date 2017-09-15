@@ -35,7 +35,7 @@ const home = {
   actions: {
     fetchHistory1({ commit }) {
       return new Promise((resolve, reject) => {
-        axios.get(`${config.apiHost}/history?isFinish=1`)
+        axios.get(`${config.apiHost}/trade/history?isFinish=1`)
          .then(response => {
            commit({
              type: GET_HISTORY_DATA1,
@@ -49,7 +49,7 @@ const home = {
     },
     fetchHistory0({ commit }) {
       return new Promise((resolve, reject) => {
-        axios.get(`${config.apiHost}/history?isFinish=0`)
+        axios.get(`${config.apiHost}/trade/history?isFinish=0`)
          .then(response => {
            commit({
              type: GET_HISTORY_DATA0,
@@ -63,7 +63,7 @@ const home = {
     },
     fetchHistory_1({ commit }) {
       return new Promise((resolve, reject) => {
-        axios.get(`${config.apiHost}/history?isFinish=-1`)
+        axios.get(`${config.apiHost}/trade/history?isFinish=-1`)
          .then(response => {
            commit({
              type: GET_HISTORY_DATA_1,

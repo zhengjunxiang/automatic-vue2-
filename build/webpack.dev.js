@@ -27,7 +27,7 @@ const config = Merge(CommonConfig, {
   plugins: [
     new Webpack.HotModuleReplacementPlugin(),
     new Webpack.DefinePlugin({
-      'process.env': {'NODE_ENV': JSON.stringify('development')}
+      'process.env': conf.dev.env
     }),
     new FriendlyErrorsPlugin()
   ]

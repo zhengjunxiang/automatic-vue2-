@@ -1,24 +1,24 @@
 <template>
   <div>
-    <header-nav></header-nav>
+    <navbar />
     <Row :class="{contantor: true, 'app-state-close': this.appStateClose}">
       <Col :class="{sidebar: true, 'state-close': this.appStateClose}">
-        <sidebar @changeAppState="changeAppState" :sidebarStateClose="appStateClose"></sidebar>
+        <sidebar @changeAppState="changeAppState" :sidebarStateClose="appStateClose" />
       </Col>
       <Col class="views">
-        <app-main></app-main>
+        <app-main />
       </Col>
     </Row>
   </div>
 </template>
 
 <script>
-import { HeaderNav, Sidebar, AppMain } from './index';
+import { Navbar, Sidebar, AppMain } from './index';
 
 export default {
   name: 'Layout',
   components: {
-    HeaderNav,
+    Navbar,
     Sidebar,
     AppMain
   },

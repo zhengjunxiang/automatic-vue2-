@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     fetchUserinfo() {
-      this.$http.get(`${config.apiHost}/userinfo`)
+      this.$http.get(`${config.apiHost}/user/userinfo`)
         .then(response => {
           this.userSunInfo = response.data;
           this.$Message.success('userinfo获取成功');

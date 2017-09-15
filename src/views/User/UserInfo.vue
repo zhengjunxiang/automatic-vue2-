@@ -73,7 +73,7 @@ export default {
           };
           this.$http({
             method:'post',
-            url: `${conf.apiHost}/updatePsw`,
+            url: `${conf.apiHost}/user/updatePsw`,
             data: formData,
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'

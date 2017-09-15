@@ -1,11 +1,10 @@
 import axios from 'axios';
 import store from '@/store/store';
 import { getToken } from '@/utils/auth';
-import conf from '@/config';
 
 // 创建axios实例
 const service = axios.create({
-  baseURL: conf.apiHost, // api的base_url
+  baseURL: process.env.BASE_API, // api的base_url
   timeout: 10000             // 请求超时时间
 });
 

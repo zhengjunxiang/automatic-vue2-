@@ -2,8 +2,7 @@ import fetch from '@/utils/fetch';
 
 export function login(loginName, password) {
   return fetch({
-    // url: `${conf.apiHost}/login`,
-    url: '/login',
+    url: '/user/login',
     method: 'post',
     data: {
       loginName,
@@ -26,6 +25,6 @@ export function getInfo(token) {
 export function logout() {
   return fetch({
     url: '/user/logout',
-    method: 'post'
+    method: 'get'
   });
 }

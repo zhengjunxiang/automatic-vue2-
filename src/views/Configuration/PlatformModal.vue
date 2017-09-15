@@ -56,7 +56,7 @@ export default {
         if (valid) {
           this.$http({
             method:'post',
-            url: `${config.apiHost}/savePlatform`,
+            url: `${config.apiHost}/platform/savePlatform`,
             data: this.formValidate,
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
