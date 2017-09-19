@@ -16,9 +16,9 @@ const config = function(env) {
         extract: true
       })
     },
-    // stats: {
-    //   modules: false, errors: true, warnings: false, chunks: false
-    // },
+    stats: {
+      modules: false, errors: true, warnings: false, chunks: false
+    },
     // devtool: 'source-map',
     plugins: [
       new Webpack.LoaderOptionsPlugin({
@@ -39,7 +39,7 @@ const config = function(env) {
       new Webpack.NoEmitOnErrorsPlugin(),
       // 生成稳定的模块ID，稳定chunkhash
       new Webpack.HashedModuleIdsPlugin(),
-      new WebpackChunkHash(),
+      // new WebpackChunkHash(),
       new Webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
         minChunks: function(module) {

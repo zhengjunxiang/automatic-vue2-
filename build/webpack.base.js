@@ -61,9 +61,10 @@ const config = {
       filename: 'index.html',
       template: 'src/index.html',
       favicon: resolve('favicon.ico'),
-      inject: true
-    }),
-    new Webpack.optimize.ModuleConcatenationPlugin()
+      inject: true,
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency'
+    })
   ]
 }
 
