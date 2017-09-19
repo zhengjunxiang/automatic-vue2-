@@ -7,3 +7,4 @@ npm-debug.log
 dist
 cache
 buildNW
+yarn-error.log

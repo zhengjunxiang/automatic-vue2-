@@ -21,18 +21,19 @@ export default {
         content: '<h3>确认退出吗？</h3>',
         onOk: () => {
           this.$store.dispatch('LogOut').then(res => {
-            if (res.data.result === true) {
+            if (res.data.value === true) {
               this.$Message.success(res.data.message || '退出成功！')
               window.setTimeout(() => {
                 this.$router.push({
                   name: 'Login'
                 });
               }, 600);
+              return null;
             }
             this.$Message.error(res.data.message || '退出失败！')
           }).catch(err => {
             console.log('err', err)
-            this.$Message.error(err.data.message || '退出失败！')
+            this.$Message.error(err.data && res.data.message || '退出失败！')
           });
         }
       });
