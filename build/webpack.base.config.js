@@ -11,9 +11,6 @@ function resolve (dir) {
 }
 
 const config = {
-  entry: {
-    main: resolve('src/app.js')
-  },
   output: {
     filename: 'js/[name].[chunkhash:8].js',
     path: resolve('dist'),

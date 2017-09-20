@@ -1,18 +1,25 @@
 /*eslint-disable*/
 const Path = require('path');
-var utils = require('./utils')
+const utils = require('./utils');
 const Webpack = require('webpack');
 const Merge = require('webpack-merge');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
-const CommonConfig = require('./webpack.base.js');
+const BaseConfig = require('./webpack.base.config');
 const conf = require('../config');
 
-// add hot-reload related code to entry chunks
-Object.keys(CommonConfig.entry).forEach(function (name) {
-  CommonConfig.entry[name] = ['./build/dev-client'].concat(CommonConfig.entry[name])
-})
+function resolve (dir) {
+  return Path.join(__dirname, '..', dir)
+}
 
-const config = Merge(CommonConfig, {
+const config = Merge(BaseConfig, {
+  entry: {
+    main: [
+      'babel-polyfill',
+      'event-source-polyfill',
+      'webpack-hot-middleware/client?noInfo=true',
+      resolve('src/app.js')
+    ]
+  },
   module: {
     rules: utils.styleLoaders({ sourceMap: conf.dev.cssSourceMap })
   },

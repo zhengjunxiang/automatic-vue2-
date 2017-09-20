@@ -9,7 +9,7 @@ var opn = require('opn')
 var path = require('path')
 var express = require('express')
 var webpack = require('webpack')
-var webpackConfig = require('./webpack.dev')
+var webpackConfig = require('./webpack.dev.config')
 
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port

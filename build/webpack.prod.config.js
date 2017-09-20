@@ -4,12 +4,22 @@ const Webpack = require('webpack');
 const Merge = require('webpack-merge');
 const WebpackChunkHash = require("webpack-chunk-hash");
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const CommonConfig = require('./webpack.base.js');
+const BaseConfig = require('./webpack.base.config');
 const conf = require('../config');
 const utils = require('./utils');
 
+function resolve (dir) {
+  return Path.join(__dirname, '..', dir)
+}
+
 const config = function(env) {
-  return Merge(CommonConfig, {
+  return Merge(BaseConfig, {
+    entry: {
+      main: [
+        'babel-polyfill',
+        resolve('src/app.js')
+      ]
+    },
     module: {
       rules: utils.styleLoaders({
         sourceMap: conf.build.productionSourceMap,

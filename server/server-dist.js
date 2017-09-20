@@ -27,6 +27,6 @@ app.use((req, res) => {
   res.status(404).send('File not found!')
 })
 
-app.listen(9090, '127.0.0.1', () => {
+app.listen(9090, '192.168.170.140', () => {
   console.log('ther server is running at port ' + 9090)
 })
