@@ -33,8 +33,6 @@
     "moment": "^2.18.1",
     "nodemon": "^1.11.0",
     "pako": "^1.0.5",
-    "polyfills": "remy/polyfills",
-    "request": "^2.82.0",
     "vue": "2.4.2",
     "vue-router": "2.7.0",
     "vuex": "2.3.1"
